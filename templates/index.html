@@ -1,5 +1,31 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
-{% block MainContainer %}
-    <p>这里是首页</p>
+{% block title %}Qi{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+        <div class="container" id="cont-main">
+        <div class="container-fluid" style="padding: 10px 0;">
+            <div class="row">
+                <div class="col-xs-12">
+                <div class="list-article">
+                  <div class="list-article-title"><a href="#">xxxxxxxxx</a></div>
+                  <div class="list-article-content">
+                      内容预览
+                    <a href="#">… … 阅读全文</a>
+                  </div>
+                  <div class="list-post-footer">
+                      发布于 2019-06-30
+                  </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
+
+
+
+
+

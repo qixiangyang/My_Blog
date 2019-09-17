@@ -1,35 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <style>
-        .nav-header {
-            background: #3a3a3a;
-            height: 65px;
-        }
-        ul{
-            overflow: hidden;
-        }
-        ul li{
-            float: left;
-            list-style: none;
-            padding: 0 10px;
-            line-height: 65px;
-        }
-        ul li a{
-            color: #ffffff;
-        }
-    </style>
-</head>
-<body>
-    <div class="nav-header">
-        <ul>
-            <li><a href="#">首页</a></li>
-            <li><a href="#">论坛</a> </li>
-        </ul>
-    </div>
+{% extends "bootstrap/base.html" %}
 
-    {% block MainContainer %}{% endblock %}
-</body>
-</html>
+{% block title %}Welcome Qi site{% endblock %}
+
+{% block navbar %}
+    <div class="navbar navbar-inverse" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle"
+                        data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Qi</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Home</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% block page_content %}{% endblock %}
+    </div>
+{% endblock %}
