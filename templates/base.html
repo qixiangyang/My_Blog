@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .nav-header {
+            background: #3a3a3a;
+            height: 65px;
+        }
+        ul{
+            overflow: hidden;
+        }
+        ul li{
+            float: left;
+            list-style: none;
+            padding: 0 10px;
+            line-height: 65px;
+        }
+        ul li a{
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-header">
+        <ul>
+            <li><a href="#">首页</a></li>
+            <li><a href="#">论坛</a> </li>
+        </ul>
+    </div>
+
+    {% block MainContainer %}{% endblock %}
+</body>
+</html>
