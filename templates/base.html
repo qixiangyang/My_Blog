@@ -1,6 +1,14 @@
 {% extends "bootstrap/base.html" %}
 
-{% block title %}Welcome Qi site{% endblock %}
+<head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="all">
+    <meta name="author" content="qixiangyang,qixiangyangrm@foxmail.com">
+    <meta name="keywords" content="python,flask,爬虫,足球, 皇家马德里">
+    <meta name="description" content="qixiangyang的博客" />
+    <meta http-equiv="content-Type" content="text/html; charset=utf-8" />
+    <title>Qi</title>
+</head>
 
 {% block navbar %}
     <div class="navbar navbar-inverse" role="navigation">
@@ -19,7 +27,20 @@
                 <ul class="nav navbar-nav">
                     <li><a href="/">Home</a></li>
                 </ul>
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Archives</a></li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Financial_News</a></li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Dev_News</a></li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li><a href="/about">About</a></li>
+                </ul>
             </div>
+
         </div>
     </div>
 {% endblock %}
