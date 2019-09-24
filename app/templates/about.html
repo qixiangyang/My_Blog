@@ -1,40 +1,21 @@
 {% extends "base.html" %}
 
-{% block title %} About Qi {% endblock %}
+{% block title %} 关于加油马德里 {% endblock %}
 
-{% block content %}
-    <div class="container" id="cont-main">
+{% block content %}<!--自定义模板区域-->
+    <div class="col-xs-12 col-sm-9">
 
-        <div class="container-fluid" style="margin-top: 40px;">
-            <div class="row">
-                <div class="col-md-8 markdown-body">
-                    <h2>关于我</h2>
-                    <p>欢迎来到这里，我是Qi，我是一个半路出家的的Python程序员</p>
-                    <p>尝试过很多的工作方向，最后发现，还是最喜欢写代码</p>
-                    <p>找到自己喜欢做的事情并不容易，但一起还来的及</p>
-                    <div class="section" id="id2">
-                        <h2>关于这里</h2>
-                        <p>这是我自己写的Blog，想通过这个项目将自己所学的东西串起来，做一个完整的应用。</p>
-                        <p>这个应用中会有一些新闻资讯聚合相关的小工具，希望大家喜欢</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div style="text-align: -moz-center">
-                        <img style="width: 100%; height: 100%" src="/app/staticatic/logo.jpeg">
-                    </div>
-                    <table class="contact-info table table-striped ">
-                        <tbody><tr>
-                            <th>GitHub</th>
-                            <td><a class="media-middle" target="_blank" href="https://github.com/qixiangyang/">Qi</a></td>
-                        </tr>
-                        <tr>
-                            <th>Email</th>
-                            <td>qixiangyangrm[AT]foxmail.com</td>
-                        </tr>
-                        </tbody></table>
-                </div>
-            </div>
-        </div>
+        <h2>关于我</h2>
+        <p>欢迎来到这里，我是加油马德里，我是一个半路出家的的Python程序员</p>
+        <p>尝试过很多的工作，最后发现，还是写代码最适合自己</p>
+        <p>找到自己喜欢做的事情并不容易，唯有持续学习，迎头赶上</p>
+        <h2>关于这里</h2>
+        <p>这是我自己写的Blog，从HTML页面到后端，主要基于Flask+Bootstrap完成</p>
+        <p>想通过这个项目将自己所学的东西串起来，做一个完整的应用。</p>
+        <p>这个应用中会有一些新闻资讯聚合相关的小工具，希望大家喜欢</p>
+
     </div>
+
+
 {% endblock %}
 
