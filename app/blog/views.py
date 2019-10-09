@@ -22,6 +22,12 @@ def archieves():
     return render_template('archieves.html')
 
 
+@blog.route('/archieves/<article_id>')
+def article(article_id):
+    print(article_id)
+    return render_template('article_page.html')
+
+
 @blog.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
