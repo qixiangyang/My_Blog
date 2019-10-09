@@ -9,11 +9,13 @@
     
 2. 前后端交数据的交互
     
-    a. 新建数据库, 使用migrate 的方式进行数据库的管理
+    a. 新建数据库, 使用migrate的方式进行数据库的管理
     b. 造假数据，从后端传数据 使用Faker生产假数据
     c. 写页面模板，包含目录页和文章页。
     
-
+    与坑记录 需要安装psycopg2 但是安装时报错，需安装psycopg2-binary
+    链接：https://github.com/psycopg/psycopg2/issues/890
+    
 3. 列表页分页
 
 
