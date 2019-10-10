@@ -12,7 +12,7 @@ def get_fake_data():
         data = dict()
         data['author'] = fake.name()
         data['title'] = fake.sentence()
-        data['text'] = fake.paragraph(10)
+        data['text'] = fake.paragraph(20)
         data['category'] = fake.word()
         data['create_time'] = fake.date()
         data['update_time'] = fake.date()
@@ -45,9 +45,11 @@ def archieves():
 
 @blog.route('/archieves/<article_id>')
 def article(article_id):
-    data = get_fake_data()
-    print(data)
-    return render_template('article_page.html')
+    page_data = get_fake_data()[0]
+    with open('text.txt', mode='r', encoding='utf-8') as f:
+        txt_html = f.read()
+    print(page_data)
+    return render_template('article_page.html', page_data=page_data, markdown_data=txt_html)
 
 
 @blog.errorhandler(404)
