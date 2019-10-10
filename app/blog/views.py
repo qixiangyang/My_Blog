@@ -1,5 +1,26 @@
 from flask import render_template
 from . import blog
+from faker import Faker
+
+
+def get_fake_data():
+    
+    fake_data_list = []
+    fake = Faker(locale='zh_CN')
+    
+    for _ in range(20):
+        data = dict()
+        data['author'] = fake.name()
+        data['title'] = fake.sentence()
+        data['text'] = fake.paragraph(10)
+        data['category'] = fake.word()
+        data['create_time'] = fake.date()
+        data['update_time'] = fake.date()
+        data['upload_time'] = fake.date()
+        data['other_info'] = fake.password(special_chars=False)
+        fake_data_list.append(data)
+    
+    return fake_data_list
 
 
 @blog.route('/')
@@ -24,7 +45,8 @@ def archieves():
 
 @blog.route('/archieves/<article_id>')
 def article(article_id):
-    print(article_id)
+    data = get_fake_data()
+    print(data)
     return render_template('article_page.html')
 
 

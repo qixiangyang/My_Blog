@@ -13,11 +13,11 @@ class Article(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(64), unique=True)
     text = db.Column(db.String(10000))
+    author = db.Column(db.String(20))
+    category = db.Column(db.String(20))
     create_time = db.Column(db.DateTime)
     update_time = db.Column(db.DateTime)
     upload_time = db.Column(db.DateTime)
-    author = db.Column(db.String(20))
-    categrory = db.Column(db.String(20))
     other_info = db.Column(db.String(100))
 
     def __repr__(self):
