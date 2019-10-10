@@ -12,7 +12,7 @@ def get_fake_data():
         data = dict()
         data['author'] = fake.name()
         data['title'] = fake.sentence()
-        data['text'] = fake.paragraph(20)
+        data['text'] = fake.paragraph(10)
         data['category'] = fake.word()
         data['create_time'] = fake.date()
         data['update_time'] = fake.date()
@@ -35,12 +35,14 @@ def about():
 
 @blog.route('/py-news')
 def py_news():
-    return render_template('pynews.html')
+    page_data = get_fake_data()
+    return render_template('pynews.html', page_data=page_data)
 
 
 @blog.route('/archieves')
 def archieves():
-    return render_template('archieves.html')
+    page_data = get_fake_data()
+    return render_template('archieves.html', page_data=page_data)
 
 
 @blog.route('/archieves/<article_id>')
