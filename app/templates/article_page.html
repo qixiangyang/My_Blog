@@ -1,6 +1,15 @@
 {% extends "base.html" %}<!--继承基础模板-->
 {% block content%}
     <div class="container col-xs-9" >
-        <p class="text-center h2"> 这是标题 </p>
+        <div class="info">
+            <h2 class="page-header" style="color: #1b6d85"> 这是标题 </h2>
+            <p class="text-left" style="color: #999999"> 作者：{{ page_data.author }} &nbsp | 分类：&nbsp{{ page_data.category}} &nbsp
+            | &nbsp 发布时间：&nbsp{{ page_data.create_time}}
+            </p>
+            {% filter markdown %}
+                {{ markdown_data }}
+            {% endfilter %}
+
+        </div>
     </div>
 {% endblock %}
