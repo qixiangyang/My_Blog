@@ -1,29 +1,19 @@
 {% extends "base.html" %}<!--继承基础模板-->
 {% block content %}<!--自定义模板区域-->
     <div class="col-xs-9">
-        <div class="alert" style="background-color: #f6f6f6">
-            <p class="h2">优美胜于丑陋, 明了胜于隐晦</p>
-            <p>Zen of Python
-                <small class="text-muted"> 2019-09-12</small>
-            </p>
-            <br>
-            <p>Beautiful is better than ugly. Explicit is better than implicit.	Simple is better than complex. Complex is better than complicated. Flat is better than nested. Sparse is better than dense.	</p>
-            <br>
-            <p class="h6">来源：XXXX
-                <a href="#"> 查看原文</a>
-            </p>
-        </div>
-        <div class="alert" style="background-color: #f6f6f6">
-            <p class="h2">优美胜于丑陋, 明了胜于隐晦</p>
-            <p>Zen of Python
-                <small class="text-muted"> 2019-09-12</small>
-            </p>
-            <br>
-            <p>Beautiful is better than ugly. Explicit is better than implicit.	Simple is better than complex. Complex is better than complicated. Flat is better than nested. Sparse is better than dense.	</p>
-            <br>
-            <p class="h6">来源：XXXX
-                <a href="#"> 查看原文</a>
-            </p>
-        </div>
-    </div><!--/row-->
+        {% for data in page_data %}
+            <div class="alert" style="background-color: #f6f6f6">
+                <h2 style="color: #1b6d85"> {{ data.title }} </h2>
+                <p>
+                    来源：{{ data.author }} &nbsp
+                    | &nbsp 发布时间：&nbsp{{ data.create_time }} &nbsp
+                    | &nbsp 标签：&nbsp{{ data.category }}
+                </p>
+                <br>
+                <p>{{ data.text }}
+                    <a href="#" style="right: initial">查看原文</a>
+                </p>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
