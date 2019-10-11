@@ -1,13 +1,15 @@
-from flask import render_template
+from flask import render_template, request
 from . import blog
 from faker import Faker
+from .. import db
+from ..models import Article, PyNews
 
 
 def get_fake_data():
-    
+
     fake_data_list = []
     fake = Faker(locale='zh_CN')
-    
+
     for _ in range(20):
         data = dict()
         data['author'] = fake.name()
@@ -19,7 +21,7 @@ def get_fake_data():
         data['upload_time'] = fake.date()
         data['other_info'] = fake.password(special_chars=False)
         fake_data_list.append(data)
-    
+
     return fake_data_list
 
 
@@ -35,14 +37,23 @@ def about():
 
 @blog.route('/py-news')
 def py_news():
-    page_data = get_fake_data()
-    return render_template('pynews.html', page_data=page_data)
+    py_news_data = PyNews.query.all()
+    py_news_dict = [x.to_json() for x in py_news_data]
+
+    page = request.args.get('page', 1, type=int)
+    pagination = PyNews.query.order_by(PyNews.pub_time.desc()).paginate(page, per_page=10, error_out=False)
+    posts = pagination.items
+
+    return render_template('pynews.html', page_data=py_news_dict, posts=posts, pagination=pagination)
+
+    # return render_template('pynews.html', page_data=py_news_dict)
 
 
 @blog.route('/archieves')
 def archieves():
-    page_data = get_fake_data()
-    return render_template('archieves.html', page_data=page_data)
+    article_data = Article.query.all()
+    article_data_dict = [x.to_json() for x in article_data]
+    return render_template('archieves.html', page_data=article_data_dict)
 
 
 @blog.route('/archieves/<article_id>')

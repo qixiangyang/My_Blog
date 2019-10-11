@@ -1,4 +1,5 @@
 {% extends "base.html" %}<!--继承基础模板-->
+{% import "_macros.html" as macros %}
 {% block content %}<!--自定义模板区域-->
     <div class="col-xs-9">
         {% for data in page_data %}
@@ -15,5 +16,12 @@
                 </p>
             </div>
         {% endfor %}
+        {% if pagination %}
+        <div class="pagination">
+            {{ macros.pagination_widget(pagination, '.py_news') }}
+        </div>
+    {% endif %}
     </div>
 {% endblock %}
+
+
