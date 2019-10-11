@@ -122,8 +122,9 @@ def insert_pynews():
 
     session.add_all(sql_obj)
     session.commit()
-    print("article 数据插入完成")
+    print("pynews 数据插入完成")
 
 
 if __name__ == '__main__':
-    insert_article()
+    # insert_article()
+    insert_pynews()

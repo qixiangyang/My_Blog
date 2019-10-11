@@ -1,13 +1,15 @@
-from flask import render_template
+from flask import render_template, jsonify
 from . import blog
 from faker import Faker
+from .. import db
+from ..models import Article, PyNews
 
 
 def get_fake_data():
-    
+
     fake_data_list = []
     fake = Faker(locale='zh_CN')
-    
+
     for _ in range(20):
         data = dict()
         data['author'] = fake.name()
@@ -19,7 +21,7 @@ def get_fake_data():
         data['upload_time'] = fake.date()
         data['other_info'] = fake.password(special_chars=False)
         fake_data_list.append(data)
-    
+
     return fake_data_list
 
 
@@ -35,8 +37,10 @@ def about():
 
 @blog.route('/py-news')
 def py_news():
-    page_data = get_fake_data()
-    return render_template('pynews.html', page_data=page_data)
+    py_news_data = PyNews.query.all()
+    py_news_dict = [x.to_json() for x in py_news_data]
+    print(py_news_dict)
+    return render_template('pynews.html', page_data=py_news_dict)
 
 
 @blog.route('/archieves')
