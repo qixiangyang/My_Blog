@@ -75,7 +75,7 @@ def get_fake_pynews():
     fake_data_list = []
     fake = Faker(locale='zh_CN')
 
-    for _ in range(20):
+    for _ in range(60):
         data = dict()
         data['author'] = fake.name()
         data['title'] = fake.sentence()
