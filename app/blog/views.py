@@ -1,4 +1,4 @@
-from flask import render_template, jsonify
+from flask import render_template, request
 from . import blog
 from faker import Faker
 from .. import db
@@ -39,7 +39,14 @@ def about():
 def py_news():
     py_news_data = PyNews.query.all()
     py_news_dict = [x.to_json() for x in py_news_data]
-    return render_template('pynews.html', page_data=py_news_dict)
+
+    page = request.args.get('page', 1, type=int)
+    pagination = PyNews.query.order_by(PyNews.pub_time.desc()).paginate(page, per_page=10, error_out=False)
+    posts = pagination.items
+
+    return render_template('pynews.html', page_data=py_news_dict, posts=posts, pagination=pagination)
+
+    # return render_template('pynews.html', page_data=py_news_dict)
 
 
 @blog.route('/archieves')
