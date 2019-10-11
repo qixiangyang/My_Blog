@@ -39,14 +39,14 @@ def about():
 def py_news():
     py_news_data = PyNews.query.all()
     py_news_dict = [x.to_json() for x in py_news_data]
-    print(py_news_dict)
     return render_template('pynews.html', page_data=py_news_dict)
 
 
 @blog.route('/archieves')
 def archieves():
-    page_data = get_fake_data()
-    return render_template('archieves.html', page_data=page_data)
+    article_data = Article.query.all()
+    article_data_dict = [x.to_json() for x in article_data]
+    return render_template('archieves.html', page_data=article_data_dict)
 
 
 @blog.route('/archieves/<article_id>')

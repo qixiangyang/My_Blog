@@ -16,6 +16,7 @@ class Article(db.Model):
     text = db.Column(db.String(10000))
     author = db.Column(db.String(20))
     category = db.Column(db.String(20))
+    tags = db.Column(db.String(50))
     create_time = db.Column(db.DateTime)
     update_time = db.Column(db.DateTime)
     upload_time = db.Column(db.DateTime)
@@ -23,6 +24,21 @@ class Article(db.Model):
 
     def __repr__(self):
         return '<title %r author %r>' % (self.title, self.author)
+    
+    def to_json(self):
+        json_data = {
+            'id': self.id,
+            'title': self.title,
+            'text': self.text,
+            'author': self.author,
+            'category': self.category,
+            'tags': self.tags,
+            'create_time': self.create_time.strftime('%Y-%m-%d'),
+            'update_time': self.update_time.strftime('%Y-%m-%d'),
+            'upload_time': self.upload_time.strftime('%Y-%m-%d'),
+            'other_info': self.other_info
+        }
+        return json_data
     
     
 class PyNews(db.Model):
