@@ -43,6 +43,19 @@
 
 6. 爬虫
     1. 确定目标网站
+    目标网站：
+    
+    https://www.kawabangga.com/ # 卡瓦邦噶！
+    https://laike9m.com/blog/ # laike9m
+    https://www.zlovezl.cn/ # Piglei
+    https://manjusaka.itscoder.com/ # Manjusaka
+    https://www.the5fire.com/ # the5fire
+    https://www.dongwm.com/ # 小明明
+    https://foofish.net/ # Python之禅
+    https://cuiqingcai.com/ # 崔庆才
+    https://frostming.com/ #Frost
+    https://blog.ansheng.me/ #ansheng
+
     2. 爬虫撰写 (正常日志与异常日志分开)
     3. 内容分类（机器学习）
     4. 定时任务 
