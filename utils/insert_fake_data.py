@@ -127,4 +127,5 @@ def insert_pynews():
 
 if __name__ == '__main__':
     # insert_article()
-    insert_pynews()
+    # insert_pynews()
+    insert_article()

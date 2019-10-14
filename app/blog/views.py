@@ -51,20 +51,22 @@ def py_news():
     # return render_template('pynews.html', page_data=py_news_dict)
 
 
-@blog.route('/archieves')
+@blog.route('/archieves', methods=['GET'])
 def archieves():
-    article_data = Article.query.all()
-    article_data_dict = [x.to_json() for x in article_data]
-    return render_template('archieves.html', page_data=article_data_dict)
+    page = request.args.get('page', 1, type=int)
+    pagination = Article.query.order_by(Article.create_time.desc()).paginate(page, per_page=10, error_out=False)
+    posts = pagination.items
+
+    now_page_data = [x.to_json() for x in posts]
+
+    return render_template('archieves.html', page_data=now_page_data, pagination=pagination)
+    # return render_template('archieves.html', page_data=article_data_dict)
 
 
 @blog.route('/archieves/<article_id>')
 def article(article_id):
-    page_data = get_fake_data()[0]
-    with open('text.txt', mode='r', encoding='utf-8') as f:
-        txt_html = f.read()
-    print(page_data)
-    return render_template('article_page.html', page_data=page_data, markdown_data=txt_html)
+    page_data = Article.query.filter_by(id=article_id).first()
+    return render_template('article_page.html', page_data=page_data)
 
 
 @blog.errorhandler(404)
