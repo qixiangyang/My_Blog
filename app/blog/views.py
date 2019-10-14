@@ -25,17 +25,8 @@ def get_fake_data():
     return fake_data_list
 
 
-@blog.route('/')
-def hello_world():
-    return render_template('index.html')
-
-
-@blog.route('/about')
-def about():
-    return render_template('about.html')
-
-
 @blog.route('/py-news')
+@blog.route('/')
 def py_news():
     # py_news_data = PyNews.query.all()
     # py_news_dict = [x.to_json() for x in py_news_data]
@@ -67,6 +58,11 @@ def archieves():
 def article(article_id):
     page_data = Article.query.filter_by(id=article_id).first()
     return render_template('article_page.html', page_data=page_data)
+
+
+@blog.route('/about')
+def about():
+    return render_template('about.html')
 
 
 @blog.errorhandler(404)
