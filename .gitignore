@@ -1,6 +1,5 @@
 .idea
 venv
-config.py
 .env
 .flaskenv
 _config.yml
