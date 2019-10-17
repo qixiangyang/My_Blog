@@ -13,8 +13,7 @@
                     | &nbsp 标签：&nbsp{{ data.category }}
                 </p>
                 <br>
-                <p>{{ data.text }}
-                    &nbsp
+                <p> {{ data.preview|safe }}
                     <a href="{{data.url}}" style="right: initial">查看原文</a>
                 </p>
             </div>
