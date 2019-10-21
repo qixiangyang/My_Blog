@@ -49,11 +49,16 @@ vi /var/lib/pgsql/12/data/postgresql.conf
 
 systemctl enable postgresql-12
 systemctl start postgresql-12  # 重启
+systemctl restart postgresql-12
 
 <br>权限配置
+ALTER USER postgres WITH PASSWORD '12345678';
+
+遇到一个坑，Navicats中看不到PostgreSQL的表信息
+Navicat的坑，似乎是一个bug，升级到最新版，正常
 
 
-mysql
+##### mysql
 
 ### virtualenv 部署
 最开始部署的python 版本是3.7.5，在创建virtualenv环境时，报错
