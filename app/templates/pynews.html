@@ -8,13 +8,12 @@
                     <a style="color: #1b6d85" href="{{data.url}}"> {{ data.title }} </a>
                 </h2>
                 <p>
-                    来源：{{ data.author }} &nbsp
+                    来源：{{ data.blog_name }} &nbsp
                     | &nbsp 发布时间：&nbsp{{ data.pub_time }} &nbsp
                     | &nbsp 标签：&nbsp{{ data.category }}
                 </p>
                 <br>
-                <p>{{ data.text }}
-                    &nbsp
+                <p> {{ data.preview|safe }}
                     <a href="{{data.url}}" style="right: initial">查看原文</a>
                 </p>
             </div>
