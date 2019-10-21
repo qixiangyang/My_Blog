@@ -75,6 +75,30 @@ ModuleNotFoundError: No module named '_ctypes'
 
 ### nginx 配置
 
+https://qizhanming.com/blog/2018/08/06/how-to-install-nginx-on-centos-7
+
+设置开机启动
+$ sudo systemctl enable nginx
+启动服务
+$ sudo systemctl start nginx
+停止服务
+$ sudo systemctl restart nginx
+重新加载，因为一般重新配置之后，不希望重启服务，这时可以使用重新加载。
+$ sudo systemctl reload nginx
+检查服务状态
+systemctl status nginx.service
+
+配置
+location /api/ {
+    proxy_pass http://127.0.0.1:5000/;
+    #proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+
+
+### guncorn 配置
+
+gunicorn -w2 -b0.0.0.0:9016 blog_start:app
 
 
 
