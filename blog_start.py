@@ -4,7 +4,7 @@ from app import create_app, db
 from app.models import Article, PyNews
 
 # print(os.getenv('FLASK_CONFIG'))
-app = create_app('default')
+app = create_app(os.getenv('FLASK_ENVIRONMENT') or 'default')
 migrate = Migrate(app, db)
 
 
