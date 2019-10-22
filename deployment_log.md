@@ -81,6 +81,8 @@ https://qizhanming.com/blog/2018/08/06/how-to-install-nginx-on-centos-7
 $ sudo systemctl enable nginx
 启动服务
 $ sudo systemctl start nginx
+关闭服务
+$ sudo systemctl stop nginx
 停止服务
 $ sudo systemctl restart nginx
 重新加载，因为一般重新配置之后，不希望重启服务，这时可以使用重新加载。
