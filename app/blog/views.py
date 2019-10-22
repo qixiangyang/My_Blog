@@ -25,7 +25,7 @@ def get_fake_data():
     return fake_data_list
 
 
-@blog.route('/py-news')
+@blog.route('/pyhub')
 @blog.route('/')
 def py_news():
     # py_news_data = PyNews.query.all()
@@ -37,7 +37,7 @@ def py_news():
 
     now_page_data = [x.to_json() for x in posts]
 
-    return render_template('pynews.html', page_data=now_page_data,  pagination=pagination)
+    return render_template('pyhub.html', page_data=now_page_data,  pagination=pagination)
 
     # return render_template('pynews.html', page_data=py_news_dict)
 
