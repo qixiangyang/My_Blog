@@ -100,7 +100,7 @@ location /api/ {
 
 gunicorn -w2 -b0.0.0.0:5000 blog_start:app
 
-配置
+### supervisor 配置
 [program:blog_start]
 command=/data/Blog_App/app_venv/bin/gunicorn -w4 -b0.0.0.0:5000 blog_start:app    ; supervisor启动命令
 directory=/data/Blog_App                                                 ; 项目的文件夹路径
