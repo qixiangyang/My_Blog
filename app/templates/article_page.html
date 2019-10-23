@@ -7,7 +7,7 @@
             | &nbsp 发布时间：&nbsp{{ page_data.create_time}}
             </p>
             {% filter markdown %}
-                {{ page_data.text }}
+                {{ page_data.text|safe }}
             {% endfilter %}
         </div>
     </div>

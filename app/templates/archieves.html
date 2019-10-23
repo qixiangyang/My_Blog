@@ -13,9 +13,13 @@
                     | &nbsp 标签：&nbsp{{ data.category }}
                 </p>
                 <br>
-                <p>{{ data.text }}
-                    <a href='{{'archieves/' ~ data.id|string}}' style="right: initial">查看原文</a>
-                </p>
+                <div>
+                    {% filter markdown %}
+                        {{ data.text|truncate(200) }}
+                    {% endfilter %}
+                </div>
+                <br>
+                <a href='{{'archieves/' ~ data.id|string}}' style="right: initial">查看原文</a>
             </div>
         {% endfor %}
         {% if pagination %}
