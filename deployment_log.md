@@ -101,6 +101,10 @@ location /api/ {
 ### gunicorn 配置
 
 gunicorn -w2 -b0.0.0.0:5000 blog_start:app
+gunicorn 无法正确获取环境变量，需要在启动时为其设置环境变量，如下：
+gunicorn -w4 -b 0.0.0.0:5000 --env FLASK_ENV=production blog_start:app
+在supervisor也要这样设置
+参见：http://docs.gunicorn.org/en/stable/settings.html
 
 ### supervisor 配置
 [program:blog_start]
@@ -123,8 +127,11 @@ supervisorctl -c supervisor.conf start [all]|[appname]     启动指定/所有 s
 supervisorctl -c supervisor.conf stop [all]|[appname]      关闭指定/所有 supervisor管理的程序进程
 
 
+
+
 ### GitHub拉取最新代码
 
 git init
 git remote add origin https://github.com/qixiangyang/My_Blog.git
 git pull origin master # 拿到全部源码
+pip install -r requirements.txt
