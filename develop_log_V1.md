@@ -98,6 +98,13 @@
     完成 2019-10-22
     3. 环境变量失效问题
    
+    vim ~/.bashrc
+    添加 export FLASK_ENVIRONMENT=production
+    source ~/.bashrc
+   
+    针对于当前用户生效，具体哪个命令对那种情况生效，请见：
+    https://blog.csdn.net/u011630575/article/details/49839893
+   
     ~~~
     
     3 自己文章内容的上传
