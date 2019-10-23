@@ -13,11 +13,8 @@
                     | &nbsp 标签：&nbsp{{ data.category }}
                 </p>
                 <br>
-                <div>
-                    {% filter markdown %}
-                        {{ data.text|truncate(200) }}
-                    {% endfilter %}
-                </div>
+                    {{ data.text|truncate(200) }}
+                <br>
                 <br>
                 <a href='{{'archives/' ~ data.id|string}}' style="right: initial">查看原文</a>
             </div>

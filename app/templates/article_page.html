@@ -6,9 +6,7 @@
             <p class="text-left" style="color: #999999"> 作者：{{ page_data.author }} &nbsp | 分类：&nbsp{{ page_data.category}} &nbsp
             | &nbsp 发布时间：&nbsp{{ page_data.create_time}}
             </p>
-            {% filter markdown %}
-                {{ page_data.text|safe }}
-            {% endfilter %}
         </div>
+            {{ page_data.text|markdown|safe }}
     </div>
 {% endblock %}
