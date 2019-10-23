@@ -99,8 +99,12 @@
         3. 环境变量失效问题
        
         vim ~/.bashrc
-        添加 export FLASK_ENVIRONMENT=production
+        添加 
+        export FLASK_ENVIRONMENT=production
+        export FLASK_ENV=production
         source ~/.bashrc
+       
+        unset 删除环境变量    
        
         针对于当前用户生效，具体哪个命令对那种情况生效，请见：
         https://blog.csdn.net/u011630575/article/details/49839893
