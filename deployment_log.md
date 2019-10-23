@@ -121,3 +121,10 @@ supervisorctl -c supervisor.conf status                    察看supervisor的�
 supervisorctl -c supervisor.conf reload                    重新载入 配置文件
 supervisorctl -c supervisor.conf start [all]|[appname]     启动指定/所有 supervisor管理的程序进程
 supervisorctl -c supervisor.conf stop [all]|[appname]      关闭指定/所有 supervisor管理的程序进程
+
+
+### GitHub拉取最新代码
+
+git init
+git remote add origin https://github.com/qixiangyang/My_Blog/git
+git pull origin master # 拿到全部源码
