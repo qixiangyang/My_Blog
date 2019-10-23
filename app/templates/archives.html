@@ -5,7 +5,7 @@
         {% for data in page_data %}
             <div class="alert" style="background-color: #f6f6f6">
                 <h2>
-                    <a style="color: #1b6d85" href="{{'archieves/' ~ data.id|string}}"> {{ data.title }} </a>
+                    <a style="color: #1b6d85" href="{{'archives/' ~ data.id|string}}"> {{ data.title }} </a>
                 </h2>
                 <p>
                     来源：{{ data.author }} &nbsp
@@ -13,14 +13,18 @@
                     | &nbsp 标签：&nbsp{{ data.category }}
                 </p>
                 <br>
-                <p>{{ data.text }}
-                    <a href='{{'archieves/' ~ data.id|string}}' style="right: initial">查看原文</a>
-                </p>
+                <div>
+                    {% filter markdown %}
+                        {{ data.text|truncate(200) }}
+                    {% endfilter %}
+                </div>
+                <br>
+                <a href='{{'archives/' ~ data.id|string}}' style="right: initial">查看原文</a>
             </div>
         {% endfor %}
         {% if pagination %}
             <div class="pagination center-block text-center">
-                {{ macros.pagination_widget(pagination, '.archieves') }}
+                {{ macros.pagination_widget(pagination, '.archives') }}
             </div>
         {% endif %}
     </div>

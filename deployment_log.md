@@ -75,6 +75,56 @@ ModuleNotFoundError: No module named '_ctypes'
 
 ### nginx 配置
 
+https://qizhanming.com/blog/2018/08/06/how-to-install-nginx-on-centos-7
+
+设置开机启动
+$ sudo systemctl enable nginx
+启动服务
+$ sudo systemctl start nginx
+关闭服务
+$ sudo systemctl stop nginx
+停止服务
+$ sudo systemctl restart nginx
+重新加载，因为一般重新配置之后，不希望重启服务，这时可以使用重新加载。
+$ sudo systemctl reload nginx
+检查服务状态
+systemctl status nginx.service
+
+配置
+location /api/ {
+    proxy_pass http://127.0.0.1:5000/;
+    #proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+}
 
 
+### gunicorn 配置
 
+gunicorn -w2 -b0.0.0.0:5000 blog_start:app
+
+### supervisor 配置
+[program:blog_start]
+https://www.jianshu.com/p/be9dd421fb8d
+
+command=/data/Blog_App/app_venv/bin/gunicorn -w4 -b0.0.0.0:5000 blog_start:app    ; supervisor启动命令
+directory=/data/Blog_App                                                 ; 项目的文件夹路径
+startsecs=0                                                                             ; 启动时间
+stopwaitsecs=0                                                                          ; 终止等待时间
+autostart=false                                                                         ; 是否自动启动
+autorestart=false                                                                       ; 是否自动重启
+stdout_logfile=/data/Blog_App/log/gunicorn.log                           ; log 日志
+stderr_logfile=/data/Blog_App/log/gunicorn.err
+
+命令
+supervisord -c supervisor.conf                             通过配置文件启动supervisor
+supervisorctl -c supervisor.conf status                    察看supervisor的状态
+supervisorctl -c supervisor.conf reload                    重新载入 配置文件
+supervisorctl -c supervisor.conf start [all]|[appname]     启动指定/所有 supervisor管理的程序进程
+supervisorctl -c supervisor.conf stop [all]|[appname]      关闭指定/所有 supervisor管理的程序进程
+
+
+### GitHub拉取最新代码
+
+git init
+git remote add origin https://github.com/qixiangyang/My_Blog/git
+git pull origin master # 拿到全部源码

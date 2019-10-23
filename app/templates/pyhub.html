@@ -1,7 +1,12 @@
 {% extends "base.html" %}<!--继承基础模板-->
 {% import "_macros.html" as macros %}
 {% block content %}<!--自定义模板区域-->
+
+
     <div class="col-xs-9">
+        <div class="alert text-center" style="font-size: 18px; background-color: #c8c8c8">
+            <p style="text-emphasis: #999999">本页面展示内容均获原作者授权</p>
+        </div>
         {% for data in page_data %}
             <div class="alert" style="background-color: #f6f6f6">
                 <h2>

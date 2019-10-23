@@ -25,7 +25,7 @@ def get_fake_data():
     return fake_data_list
 
 
-@blog.route('/py-news')
+@blog.route('/pyhub')
 @blog.route('/')
 def py_news():
     # py_news_data = PyNews.query.all()
@@ -37,24 +37,23 @@ def py_news():
 
     now_page_data = [x.to_json() for x in posts]
 
-    return render_template('pynews.html', page_data=now_page_data,  pagination=pagination)
+    return render_template('pyhub.html', page_data=now_page_data,  pagination=pagination)
 
     # return render_template('pynews.html', page_data=py_news_dict)
 
 
-@blog.route('/archieves', methods=['GET'])
-def archieves():
+@blog.route('/archives', methods=['GET'])
+def archives():
     page = request.args.get('page', 1, type=int)
     pagination = Article.query.order_by(Article.create_time.desc()).paginate(page, per_page=10, error_out=False)
     posts = pagination.items
 
     now_page_data = [x.to_json() for x in posts]
 
-    return render_template('archieves.html', page_data=now_page_data, pagination=pagination)
-    # return render_template('archieves.html', page_data=article_data_dict)
+    return render_template('archives.html', page_data=now_page_data, pagination=pagination)
 
 
-@blog.route('/archieves/<article_id>')
+@blog.route('/archives/<article_id>')
 def article(article_id):
     page_data = Article.query.filter_by(id=article_id).first()
     return render_template('article_page.html', page_data=page_data)
