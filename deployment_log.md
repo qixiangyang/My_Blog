@@ -126,5 +126,5 @@ supervisorctl -c supervisor.conf stop [all]|[appname]      关闭指定/所有 s
 ### GitHub拉取最新代码
 
 git init
-git remote add origin https://github.com/qixiangyang/My_Blog/git
+git remote add origin https://github.com/qixiangyang/My_Blog.git
 git pull origin master # 拿到全部源码
