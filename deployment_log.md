@@ -104,7 +104,7 @@ gunicorn -w2 -b0.0.0.0:5000 blog_start:app
 gunicorn 无法正确获取环境变量，需要在启动时为其设置环境变量，如下：
 gunicorn -w4 -b 0.0.0.0:5000 --env FLASK_ENV=production blog_start:app
 在supervisor也要这样设置
-
+参见：http://docs.gunicorn.org/en/stable/settings.html
 
 ### supervisor 配置
 [program:blog_start]
