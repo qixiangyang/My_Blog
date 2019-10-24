@@ -27,7 +27,7 @@ def get_fake_data():
 
 @blog.route('/pyhub')
 @blog.route('/')
-def py_news():
+def pyhub():
     # py_news_data = PyNews.query.all()
     # py_news_dict = [x.to_json() for x in py_news_data]
 
