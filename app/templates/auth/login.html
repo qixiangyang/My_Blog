@@ -1,0 +1,9 @@
+{% block title %}Flasky - Login{% endblock %}
+
+<form class="form" method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.email.label }}{{ form.email() }}
+    {{ form.password.label }}{{ form.password() }}
+    {{ form.remember_me }}
+    {{ form.submit() }}
+</form>
