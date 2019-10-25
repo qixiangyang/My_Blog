@@ -45,8 +45,8 @@ def article(article_id):
     return render_template('article_page.html', page_data=page_data)
 
 
-@login_required
 @blog.route('/contents')
+@login_required
 def contents():
     """
     需要先行登陆
@@ -60,8 +60,8 @@ def contents():
     return render_template('editor/contents_list.html', page_data=now_page_data, pagination=pagination)
 
 
-@login_required
 @blog.route('/delete_article/<article_id>')
+@login_required
 def delete_article(article_id):
     """
     删除选定的文章
