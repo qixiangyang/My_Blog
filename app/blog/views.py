@@ -1,4 +1,4 @@
-from flask import render_template, request
+from flask import render_template, request, flash
 from flask_login import login_required
 from . import blog
 from faker import Faker
@@ -48,7 +48,6 @@ def archives():
     page = request.args.get('page', 1, type=int)
     pagination = Article.query.order_by(Article.create_time.desc()).paginate(page, per_page=10, error_out=False)
     posts = pagination.items
-
     now_page_data = [x.to_json() for x in posts]
 
     return render_template('archives.html', page_data=now_page_data, pagination=pagination)
@@ -64,7 +63,29 @@ def article(article_id):
 @blog.route('/contents')
 def contents():
 
-    return render_template('editor/contents_list.html')
+    page = request.args.get('page', 1, type=int)
+    pagination = Article.query.order_by(Article.create_time.desc()).paginate(page, per_page=10, error_out=False)
+    posts = pagination.items
+    now_page_data = [x.to_json() for x in posts]
+
+    return render_template('editor/contents_list.html', page_data=now_page_data, pagination=pagination)
+
+
+@login_required
+@blog.route('/delete_article/<article_id>')
+def delete_article(article_id):
+    res = Article.query.filter_by(id=article_id).first()
+    db.session.delete(res)
+    db.session.commit()
+    flash('删除成功')
+
+    """重新返回数据"""
+    page = request.args.get('page', 1, type=int)
+    pagination = Article.query.order_by(Article.create_time.desc()).paginate(page, per_page=10, error_out=False)
+    posts = pagination.items
+    now_page_data = [x.to_json() for x in posts]
+
+    return render_template('editor/contents_list.html', page_data=now_page_data, pagination=pagination)
 
 
 @blog.route('/about')
