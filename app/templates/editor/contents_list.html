@@ -10,8 +10,7 @@
         <h5> 搜索预留 </h5>
         <br>
     </div>
-
-    <table class="table table-striped table-responsive">
+    <table width="100%" class="table table-striped table-responsive table-bordered table-hover">
         <thead>
         <tr>
             <th>序号</th>
@@ -25,14 +24,35 @@
         {% for data in page_data %}
             <tr>
                 <td>{{ data.id }}</td>
-                <td>{{ data.title }}</td>
+                <td>
+                    <a href=""> {{ data.title }} </a>
+                </td>
                 <td>{{ data.create_time }}</td>
                 <td>{{ data.category }}</td>
                 <td>
-                    <a href=""> 查看</a>
-                    <a href=""> 查看</a>
+                    <a class='fa fa-lg fa-edit text-light-blue' href=""> 查看</a>
+                    <a class='fa fa-lg fa-warning text-red' data-toggle="modal" data-href="{{url_for('blog.delete_article', article_id=data.id)}}"
+                       data-target="#confirm-delete"> 删除</a>
                 </td>
             </tr>
+
+            <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            请确认
+                        </div>
+                        <div class="modal-body">
+                            确认删除 {{ data.title }} 吗？
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <a class="btn btn-danger btn-ok">确认</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         {% endfor %}
         </tbody>
     </table>
@@ -42,5 +62,16 @@
             {{ macros.pagination_widget(pagination, '.contents') }}
         </div>
     {% endif %}
+
+
+    {% block js %}
+        {{ super() }}
+        <script>
+            $('#confirm-delete').on('show.bs.modal', function (e) {
+                $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+            });
+        </script>
+    {% endblock %}
+
 
 {% endblock %}
