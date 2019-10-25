@@ -6,26 +6,6 @@ from .. import db
 from ..models import Article, PyNews
 
 
-def get_fake_data():
-
-    fake_data_list = []
-    fake = Faker(locale='zh_CN')
-
-    for _ in range(20):
-        data = dict()
-        data['author'] = fake.name()
-        data['title'] = fake.sentence()
-        data['text'] = fake.paragraph(10)
-        data['category'] = fake.word()
-        data['create_time'] = fake.date()
-        data['update_time'] = fake.date()
-        data['upload_time'] = fake.date()
-        data['other_info'] = fake.password(special_chars=False)
-        fake_data_list.append(data)
-
-    return fake_data_list
-
-
 @blog.route('/pyhub')
 @blog.route('/')
 def pyhub():
