@@ -1,7 +1,6 @@
 from flask import render_template, request, flash
 from flask_login import login_required
 from . import blog
-from faker import Faker
 from .. import db
 from ..models import Article, PyNews
 
@@ -19,8 +18,6 @@ def pyhub():
     now_page_data = [x.to_json() for x in posts]
 
     return render_template('pyhub.html', page_data=now_page_data,  pagination=pagination)
-
-    # return render_template('pynews.html', page_data=py_news_dict)
 
 
 @blog.route('/archives', methods=['GET'])
