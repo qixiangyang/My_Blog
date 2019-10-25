@@ -1,0 +1,30 @@
+{% extends "base.html" %}<!--继承基础模板-->
+{% block container %}
+    <div class="container" style="column-width: auto">
+
+        <div class="row" style="column-width: auto" >
+            <p style="font-size: 20px"> 内容管理后台 </p>
+            <form class="form" method="POST">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input id="email" name="email" required type="text" value="" class="form-control"
+                           aria-describedby="emailHelp" placeholder="Enter email">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input id="password" name="password" required type="password" value=""
+                           class="form-control" placeholder="Password">
+                </div>
+                <div class="form-check">
+                    <input id="remember_me" name="remember_me" type="checkbox" value="y" class="form-check-input">
+                    <label class="form-check-label" for="exampleCheck1">remember_me</label>
+
+                </div>
+                <input id="submit" name="submit" type="submit" value="Log In" class="btn btn-primary">
+
+            </form>
+        </div>
+    </div>
+{% endblock %}

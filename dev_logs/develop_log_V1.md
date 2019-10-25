@@ -68,7 +68,8 @@
    ~~~
    1. Docker 
    2. Docker + Kubernetes
-   最终还是决定现行上线了，主要还是想先上线有一个成品，让自己的阶段性的目标完成，接下来再去优化其他的内容。
+   最终没有来得及用Docker or Kubernetes这一套。
+   决定先行上线了，主要还是想先上线有一个成品，让自己的阶段性的目标完成，接下来再折腾Docker + Kubernetes这一套。
    目前部署的情况
    Nginx + Gunicorn + supervisor
    ~~~

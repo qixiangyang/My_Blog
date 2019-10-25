@@ -24,6 +24,7 @@
 
     <body>
         <div class="container">
+            {% block container %}
             {% include "header.html" %}<!--引入网页的头部模板-->
             <div class="row row-offcanvas row-offcanvas-right".>
                 {% block content %}<!--自定义模板区域-->
@@ -31,6 +32,7 @@
                 {% include "sidebar.html" %}<!--引入网页的侧边模板-->
             </div><!--/row-->
             {% include "footer.html" %}<!--引入网页的底部模板-->
+            {% endblock %}
         </div>
         {% block js %}<!--js模块区域-->
         <!-- Bootstrap core JavaScript

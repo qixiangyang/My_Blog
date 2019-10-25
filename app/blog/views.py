@@ -1,4 +1,5 @@
 from flask import render_template, request
+from flask_login import login_required
 from . import blog
 from faker import Faker
 from .. import db
@@ -27,7 +28,7 @@ def get_fake_data():
 
 @blog.route('/pyhub')
 @blog.route('/')
-def py_news():
+def pyhub():
     # py_news_data = PyNews.query.all()
     # py_news_dict = [x.to_json() for x in py_news_data]
 
@@ -57,6 +58,13 @@ def archives():
 def article(article_id):
     page_data = Article.query.filter_by(id=article_id).first()
     return render_template('article_page.html', page_data=page_data)
+
+
+@login_required
+@blog.route('/contents')
+def contents():
+
+    return render_template('editor/contents_list.html')
 
 
 @blog.route('/about')
