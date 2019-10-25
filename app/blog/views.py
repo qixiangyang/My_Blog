@@ -6,10 +6,10 @@ from ..models import Article, PyNews
 
 
 @blog.route('/pyhub')
-@blog.route('/')
 def pyhub():
-    # py_news_data = PyNews.query.all()
-    # py_news_dict = [x.to_json() for x in py_news_data]
+    """
+    返回Py资讯页面
+    """
 
     page = request.args.get('page', 1, type=int)
     pagination = PyNews.query.order_by(PyNews.pub_time.desc()).paginate(page, per_page=10, error_out=False)
@@ -20,8 +20,13 @@ def pyhub():
     return render_template('pyhub.html', page_data=now_page_data,  pagination=pagination)
 
 
+@blog.route('/')
 @blog.route('/archives', methods=['GET'])
 def archives():
+    """
+    返回主页和自己的文章页
+    """
+
     page = request.args.get('page', 1, type=int)
     pagination = Article.query.order_by(Article.create_time.desc()).paginate(page, per_page=10, error_out=False)
     posts = pagination.items
@@ -32,6 +37,10 @@ def archives():
 
 @blog.route('/archives/<article_id>')
 def article(article_id):
+    """
+    :param article_id:
+    :return: 返回单篇文章
+    """
     page_data = Article.query.filter_by(id=article_id).first()
     return render_template('article_page.html', page_data=page_data)
 
@@ -39,7 +48,10 @@ def article(article_id):
 @login_required
 @blog.route('/contents')
 def contents():
-
+    """
+    需要先行登陆
+    :return: 返回内容列表页
+    """
     page = request.args.get('page', 1, type=int)
     pagination = Article.query.order_by(Article.create_time.desc()).paginate(page, per_page=10, error_out=False)
     posts = pagination.items
@@ -51,6 +63,11 @@ def contents():
 @login_required
 @blog.route('/delete_article/<article_id>')
 def delete_article(article_id):
+    """
+    删除选定的文章
+    :return: 返回删除后剩余的文章列表
+    """
+
     res = Article.query.filter_by(id=article_id).first()
     db.session.delete(res)
     db.session.commit()
