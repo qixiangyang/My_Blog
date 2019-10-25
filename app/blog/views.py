@@ -63,7 +63,8 @@ def article(article_id):
 @login_required
 @blog.route('/contents')
 def contents():
-    return render_template('editor/contents.html')
+
+    return render_template('editor/contents_list.html')
 
 
 @blog.route('/about')
