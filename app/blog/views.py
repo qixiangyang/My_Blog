@@ -68,29 +68,54 @@ def contents():
 
 
 @blog.route('/edit/<article_id>', methods=['GET', 'POST'])
-@login_required
 def edit(article_id):
     """
     新增或编辑文章内容
     """
-    page_data = Article.query.filter_by(id=article_id).first()
-
     form = PostForm()
+    page_data = None
 
     if form.validate_on_submit():
-        page_data.title = form.title.data
-        page_data.text = form.text.data
-        page_data.modified_date = datetime.datetime.now()
 
-        db.session.add(page_data)
-        db.session.commit()
-        flash('Edit Saved.', category='success')
-        return redirect(url_for('blog.edit', article_id=page_data.id))
+        if article_id != 'new':
+            page_data = Article.query.filter_by(id=article_id).first()
 
-    form.title.data = page_data.title
-    form.text.data = page_data.text
+            page_data.title = form.title.data
+            page_data.text = form.text.data
+            page_data.modified_date = datetime.datetime.now()
 
-    return render_template('editor/contents_edit.html', form=form, post=page_data)
+            db.session.commit()
+            flash('Edit Saved.', category='success')
+
+        else:
+            title = form.title.data
+            text = form.text.data
+            date = datetime.datetime.now()
+            new_article = Article(title=title,
+                                  text=text,
+                                  create_time=date)
+
+            db.session.add(new_article)
+            db.session.flush()
+            article_id = new_article.id
+            db.session.commit()
+
+            flash('文章新增成功.', category='success')
+
+        return redirect(url_for('blog.edit', article_id=article_id))
+
+    if article_id != 'new':
+        page_data = Article.query.filter_by(id=article_id).first()
+        form.title.data = page_data.title
+        form.text.data = page_data.text
+
+        return render_template('editor/contents_edit.html', form=form, post=page_data)
+
+    else:
+        form.title.data = ''
+        form.text.data = ''
+
+        return render_template('editor/contents_edit.html', form=form, post=page_data)
 
 
 @blog.route('/delete_article/<article_id>')
