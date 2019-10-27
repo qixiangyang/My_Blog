@@ -1,36 +1,15 @@
-from flask import render_template, request
+from flask import render_template, request, flash, redirect, url_for
 from flask_login import login_required
 from . import blog
-from faker import Faker
 from .. import db
 from ..models import Article, PyNews
 
 
-def get_fake_data():
-
-    fake_data_list = []
-    fake = Faker(locale='zh_CN')
-
-    for _ in range(20):
-        data = dict()
-        data['author'] = fake.name()
-        data['title'] = fake.sentence()
-        data['text'] = fake.paragraph(10)
-        data['category'] = fake.word()
-        data['create_time'] = fake.date()
-        data['update_time'] = fake.date()
-        data['upload_time'] = fake.date()
-        data['other_info'] = fake.password(special_chars=False)
-        fake_data_list.append(data)
-
-    return fake_data_list
-
-
 @blog.route('/pyhub')
-@blog.route('/')
 def pyhub():
-    # py_news_data = PyNews.query.all()
-    # py_news_dict = [x.to_json() for x in py_news_data]
+    """
+    返回Py资讯页面
+    """
 
     page = request.args.get('page', 1, type=int)
     pagination = PyNews.query.order_by(PyNews.pub_time.desc()).paginate(page, per_page=10, error_out=False)
@@ -40,15 +19,17 @@ def pyhub():
 
     return render_template('pyhub.html', page_data=now_page_data,  pagination=pagination)
 
-    # return render_template('pynews.html', page_data=py_news_dict)
 
-
+@blog.route('/')
 @blog.route('/archives', methods=['GET'])
 def archives():
+    """
+    返回主页和自己的文章页
+    """
+
     page = request.args.get('page', 1, type=int)
     pagination = Article.query.order_by(Article.create_time.desc()).paginate(page, per_page=10, error_out=False)
     posts = pagination.items
-
     now_page_data = [x.to_json() for x in posts]
 
     return render_template('archives.html', page_data=now_page_data, pagination=pagination)
@@ -56,15 +37,42 @@ def archives():
 
 @blog.route('/archives/<article_id>')
 def article(article_id):
+    """
+    :param article_id:
+    :return: 返回单篇文章
+    """
     page_data = Article.query.filter_by(id=article_id).first()
     return render_template('article_page.html', page_data=page_data)
 
 
-@login_required
 @blog.route('/contents')
+@login_required
 def contents():
+    """
+    需要先行登陆
+    :return: 返回内容列表页
+    """
+    page = request.args.get('page', 1, type=int)
+    pagination = Article.query.order_by(Article.create_time.desc()).paginate(page, per_page=10, error_out=False)
+    posts = pagination.items
+    now_page_data = [x.to_json() for x in posts]
 
-    return render_template('editor/contents_list.html')
+    return render_template('editor/contents_list.html', page_data=now_page_data, pagination=pagination)
+
+
+@blog.route('/delete_article/<article_id>')
+@login_required
+def delete_article(article_id):
+    """
+    删除选定的文章
+    :return: 返回删除后剩余的文章列表
+    """
+
+    res = Article.query.filter_by(id=article_id).first()
+    db.session.delete(res)
+    db.session.commit()
+
+    return redirect(url_for('blog.contents'))
 
 
 @blog.route('/about')
