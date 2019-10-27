@@ -68,6 +68,7 @@ def contents():
 
 
 @blog.route('/edit/<article_id>', methods=['GET', 'POST'])
+@login_required
 def edit(article_id):
     """
     新增或编辑文章内容
