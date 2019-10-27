@@ -35,6 +35,11 @@ def archives():
     return render_template('archives.html', page_data=now_page_data, pagination=pagination)
 
 
+@blog.route('/about')
+def about():
+    return render_template('about.html')
+
+
 @blog.route('/archives/<article_id>')
 def article(article_id):
     """
@@ -60,14 +65,22 @@ def contents():
     return render_template('editor/contents_list.html', page_data=now_page_data, pagination=pagination)
 
 
+@blog.route('/edit/<article_id>')
+@login_required
+def edit(article_id):
+    """
+    新增或编辑文章内容
+    """
+    page_data = Article.query.filter_by(id=article_id).first()
+    return render_template('editor/contents_edit.html', page_data=page_data)
+
+
 @blog.route('/delete_article/<article_id>')
 @login_required
 def delete_article(article_id):
     """
-    删除选定的文章
-    :return: 返回删除后剩余的文章列表
+    删除选定的文章并重定向本页
     """
-
     res = Article.query.filter_by(id=article_id).first()
     db.session.delete(res)
     db.session.commit()
@@ -75,18 +88,19 @@ def delete_article(article_id):
     return redirect(url_for('blog.contents'))
 
 
-@blog.route('/about')
-def about():
-    return render_template('about.html')
-
-
 @blog.errorhandler(404)
 def page_not_found(e):
+    """
+    404页面
+    """
     return render_template('404.html'), 404
 
 
 @blog.errorhandler(500)
 def server_internal_error(e):
+    """
+    500页面
+    """
     return render_template('500.html'), 500
 
 
