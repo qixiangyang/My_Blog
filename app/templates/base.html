@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
     <head>
+
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,27 +21,41 @@
         <!-- Custom styles for this template -->
         <link href="{{ url_for('static', filename='css/offcanvas.css') }}" rel="stylesheet">
         {% endblock %}
+
     </head>
 
     <body>
+
         <div class="container">
+
             {% block container %}
+
             {% include "header.html" %}<!--引入网页的头部模板-->
+
             <div class="row row-offcanvas row-offcanvas-right".>
+
                 {% block content %}<!--自定义模板区域-->
                 {% endblock %}
                 {% include "sidebar.html" %}<!--引入网页的侧边模板-->
+
             </div><!--/row-->
+
             {% include "footer.html" %}<!--引入网页的底部模板-->
+
             {% endblock %}
+
         </div>
+
         {% block js %}<!--js模块区域-->
-        <!-- Bootstrap core JavaScript
-        ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
-        <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/offcanvas.js') }}"></script>
+
+            <!-- Bootstrap core JavaScript
+            ================================================== -->
+            <!-- Placed at the end of the document so the pages load faster -->
+            <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+            <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+            <script src="{{ url_for('static', filename='js/offcanvas.js') }}"></script>
+
         {% endblock %}
+
     </body>
 </html>
