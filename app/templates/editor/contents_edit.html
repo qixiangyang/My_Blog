@@ -4,9 +4,14 @@
 
     <link rel="stylesheet" href="{{ url_for('static',filename='editormd/css/editormd.css') }}"/>
     <div class="row">
-        <h1 class="text-center">Edit Post</h1>
+        <h1 class="text-center"> 博客内容编辑器 </h1>
 
-        <form method="post" action="{{ url_for('blog.edit',article_id=post.id) }}">
+        {% if post %}
+            <form method="post" action="{{ url_for('blog.edit',article_id=post.id) }}">
+        {% else %}
+            <form method="post" action="{{ url_for('blog.edit',article_id='new') }}">
+        {% endif %}
+
             {{ form.hidden_tag() }}
             <div class="form-group">
                 {{ form.title.label }}
@@ -32,9 +37,12 @@
 
             </div>
 
+        {% if post %}
+            <input class="btn btn-primary" type="submit" value="修改">
+        {% else %}
+            <input class="btn btn-primary" type="submit" value="新增">
+        {% endif %}
 
-
-            <input class="btn btn-primary" type="submit" value="Edit">
         </form>
     </div>
 
