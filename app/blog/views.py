@@ -1,4 +1,4 @@
-from flask import render_template, request, flash
+from flask import render_template, request, flash, redirect, url_for
 from flask_login import login_required
 from . import blog
 from .. import db
@@ -71,15 +71,8 @@ def delete_article(article_id):
     res = Article.query.filter_by(id=article_id).first()
     db.session.delete(res)
     db.session.commit()
-    flash('删除成功')
 
-    """重新返回数据"""
-    page = request.args.get('page', 1, type=int)
-    pagination = Article.query.order_by(Article.create_time.desc()).paginate(page, per_page=10, error_out=False)
-    posts = pagination.items
-    now_page_data = [x.to_json() for x in posts]
-
-    return render_template('editor/contents_list.html', page_data=now_page_data, pagination=pagination)
+    return redirect(url_for('blog.contents'))
 
 
 @blog.route('/about')
