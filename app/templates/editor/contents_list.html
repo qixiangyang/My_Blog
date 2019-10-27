@@ -29,12 +29,12 @@
             <tr>
                 <td>{{ data.id }}</td>
                 <td>
-                    <a href=""> {{ data.title }} </a>
+                    <a href="{{ url_for('blog.article', article_id=data.id) }}"> {{ data.title }} </a>
                 </td>
                 <td>{{ data.create_time }}</td>
                 <td>{{ data.category }}</td>
                 <td>
-                    <a class='fa fa-lg fa-edit text-light-blue' href=""> 查看</a>
+                    <a class='fa fa-lg fa-edit text-light-blue' href="{{ url_for('blog.edit', article_id=data.id) }}"> 编辑 </a>
                     <a class='fa fa-lg fa-warning text-red' data-toggle="modal" data-href="{{url_for('blog.delete_article', article_id=data.id)}}"
                        data-target="#confirm-delete"> 删除</a>
                 </td>
