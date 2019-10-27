@@ -2,7 +2,9 @@ from flask import render_template, request, flash, redirect, url_for
 from flask_login import login_required
 from . import blog
 from .. import db
+from .forms import PostForm
 from ..models import Article, PyNews
+import datetime
 
 
 @blog.route('/pyhub')
@@ -65,14 +67,30 @@ def contents():
     return render_template('editor/contents_list.html', page_data=now_page_data, pagination=pagination)
 
 
-@blog.route('/edit/<article_id>')
+@blog.route('/edit/<article_id>', methods=['GET', 'POST'])
 @login_required
 def edit(article_id):
     """
     新增或编辑文章内容
     """
     page_data = Article.query.filter_by(id=article_id).first()
-    return render_template('editor/contents_edit.html', page_data=page_data)
+
+    form = PostForm()
+
+    if form.validate_on_submit():
+        page_data.title = form.title.data
+        page_data.text = form.text.data
+        page_data.modified_date = datetime.datetime.now()
+
+        db.session.add(page_data)
+        db.session.commit()
+        flash('Edit Saved.', category='success')
+        return redirect(url_for('blog.edit', article_id=page_data.id))
+
+    form.title.data = page_data.title
+    form.text.data = page_data.text
+
+    return render_template('editor/contents_edit.html', form=form, post=page_data)
 
 
 @blog.route('/delete_article/<article_id>')
