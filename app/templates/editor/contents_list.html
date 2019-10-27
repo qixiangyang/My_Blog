@@ -12,9 +12,11 @@
 
     <div class="text-left">
         <h5> 搜索预留 </h5>
-        <br>
+        <a href="{{ url_for('blog.edit', article_id='new') }}">
+            <button style=""> 新增文章 </button>
+        </a>
     </div>
-
+    <br>
     <table class="table table-striped table-responsive table-bordered table-hover">
 
         <thead>
