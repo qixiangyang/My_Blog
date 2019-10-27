@@ -34,9 +34,9 @@ class Article(db.Model):
             'author': self.author,
             'category': self.category,
             'tags': self.tags,
-            'create_time': str(self.create_time),
-            'update_time': str(self.update_time),
-            'upload_time': str(self.upload_time),
+            'create_time': str(self.create_time).split(' ')[0],
+            'update_time': str(self.update_time).split(' ')[0],
+            'upload_time': str(self.upload_time).split(' ')[0],
             'other_info': self.other_info,
         }
         return json_data
@@ -73,7 +73,7 @@ class PyNews(db.Model):
             'tags': self.tags,
             'read_count': self.read_count,
             'comment_count': self.comment_count,
-            'pub_time': str(self.pub_time),
+            'pub_time': str(self.pub_time).split(' ')[0],
             'url': self.url,
             'other_info': self.other_info,
             'blog_name': self.blog_name,
