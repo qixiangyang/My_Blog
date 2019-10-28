@@ -83,7 +83,7 @@ def edit(article_id):
 
             page_data.title = form.title.data
             page_data.text = form.text.data
-            page_data.modified_date = datetime.datetime.now()
+            page_data.update = datetime.datetime.now()
 
             db.session.commit()
             flash('Edit Saved.', category='success')
@@ -91,10 +91,10 @@ def edit(article_id):
         else:
             title = form.title.data
             text = form.text.data
-            date = datetime.datetime.now()
+            create_time = datetime.datetime.now()
             new_article = Article(title=title,
                                   text=text,
-                                  create_time=date)
+                                  create_time=create_time)
 
             db.session.add(new_article)
             db.session.flush()
@@ -106,9 +106,13 @@ def edit(article_id):
         return redirect(url_for('blog.edit', article_id=article_id))
 
     if article_id != 'new':
+
         page_data = Article.query.filter_by(id=article_id).first()
+
         form.title.data = page_data.title
         form.text.data = page_data.text
+        form.category.data = page_data.category
+        form.tags.data = page_data.tags
 
         return render_template('editor/contents_edit.html', form=form, post=page_data)
 
