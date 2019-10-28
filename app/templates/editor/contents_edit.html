@@ -6,6 +6,13 @@
     <div class="row">
         <h1 class="text-center"> 博客内容编辑器 </h1>
 
+        <a href="{{ url_for('blog.contents') }}">
+            <button class="btn btn-info left"> 回到文章目录 </button>
+            <br>
+            <br>
+        </a>
+
+
         {% if post %}
             <form method="post" action="{{ url_for('blog.edit',article_id=post.id) }}">
         {% else %}
@@ -27,12 +34,15 @@
             <div class="form-group">
                 {{ form.category.label }}
                 {{ form.category(class_='form-control') }}
+            </div>
 
+            <div>
                 {{ form.tags.label }}
                 {{ form.tags(class_='form-control') }}
             </div>
 
             <div class="form-group">
+                <br>
                 {{ form.text.label }}
                 {% if form.text.errors %}
                     {% for e in form.text.errors %}
@@ -40,11 +50,15 @@
                     {% endfor %}
                 {% endif %}
 
+                <div id="editormd" class="form-control">
+                    {{ form.text(style="display:none;") }}
+                </div>
+
             </div>
 
-            <div id="editormd" class="form-control">
-                {{ form.text(style="display:none;") }}
-            </div>
+
+
+
 
         {% if post %}
             <input class="btn btn-primary" type="submit" value="修改">
