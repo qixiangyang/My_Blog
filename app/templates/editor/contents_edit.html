@@ -6,6 +6,13 @@
     <div class="row">
         <h1 class="text-center"> 博客内容编辑器 </h1>
 
+        <a href="{{ url_for('blog.contents') }}">
+            <button class="btn btn-info left"> 回到文章目录 </button>
+            <br>
+            <br>
+        </a>
+
+
         {% if post %}
             <form method="post" action="{{ url_for('blog.edit',article_id=post.id) }}">
         {% else %}
@@ -13,6 +20,7 @@
         {% endif %}
 
             {{ form.hidden_tag() }}
+
             <div class="form-group">
                 {{ form.title.label }}
                 {% if form.title.errors %}
@@ -24,6 +32,17 @@
             </div>
 
             <div class="form-group">
+                {{ form.category.label }}
+                {{ form.category(class_='form-control') }}
+            </div>
+
+            <div>
+                {{ form.tags.label }}
+                {{ form.tags(class_='form-control') }}
+            </div>
+
+            <div class="form-group">
+                <br>
                 {{ form.text.label }}
                 {% if form.text.errors %}
                     {% for e in form.text.errors %}
@@ -36,6 +55,10 @@
                 </div>
 
             </div>
+
+
+
+
 
         {% if post %}
             <input class="btn btn-primary" type="submit" value="修改">
@@ -55,7 +78,7 @@
 
             $(function () {
                 testEditor = editormd("editormd", {
-                    width: "90%",
+                    width: "100%",
                     height: 640,
                     syncScrolling: "single",
                     path: "{{ url_for('static',filename='editormd/lib/') }}"
