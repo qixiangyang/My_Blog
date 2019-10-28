@@ -13,6 +13,7 @@
         {% endif %}
 
             {{ form.hidden_tag() }}
+
             <div class="form-group">
                 {{ form.title.label }}
                 {% if form.title.errors %}
@@ -24,6 +25,14 @@
             </div>
 
             <div class="form-group">
+                {{ form.category.label }}
+                {{ form.category(class_='form-control') }}
+
+                {{ form.tags.label }}
+                {{ form.tags(class_='form-control') }}
+            </div>
+
+            <div class="form-group">
                 {{ form.text.label }}
                 {% if form.text.errors %}
                     {% for e in form.text.errors %}
@@ -31,10 +40,10 @@
                     {% endfor %}
                 {% endif %}
 
-                <div id="editormd" class="form-control">
-                    {{ form.text(style="display:none;") }}
-                </div>
+            </div>
 
+            <div id="editormd" class="form-control">
+                {{ form.text(style="display:none;") }}
             </div>
 
         {% if post %}
@@ -55,7 +64,7 @@
 
             $(function () {
                 testEditor = editormd("editormd", {
-                    width: "90%",
+                    width: "100%",
                     height: 640,
                     syncScrolling: "single",
                     path: "{{ url_for('static',filename='editormd/lib/') }}"
