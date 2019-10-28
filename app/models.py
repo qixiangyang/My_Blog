@@ -18,9 +18,8 @@ class Article(db.Model):
     author = db.Column(db.String(20))
     category = db.Column(db.String(20))
     tags = db.Column(db.String(50))
-    create_time = db.Column(db.DateTime)
-    update_time = db.Column(db.DateTime)
-    upload_time = db.Column(db.DateTime)
+    create_time = db.Column(db.TIMESTAMP)
+    update_time = db.Column(db.TIMESTAMP)
     other_info = db.Column(db.String(100))
 
     def __repr__(self):
@@ -34,9 +33,8 @@ class Article(db.Model):
             'author': self.author,
             'category': self.category,
             'tags': self.tags,
-            'create_time': str(self.create_time).split(' ')[0],
-            'update_time': str(self.update_time).split(' ')[0],
-            'upload_time': str(self.upload_time).split(' ')[0],
+            'create_time': self.create_time,
+            'update_time': self.update_time,
             'other_info': self.other_info,
         }
         return json_data
@@ -53,7 +51,7 @@ class PyNews(db.Model):
     tags = db.Column(db.String(200))
     read_count = db.Column(db.Integer)
     comment_count = db.Column(db.Integer)
-    pub_time = db.Column(db.DateTime)
+    pub_time = db.Column(db.TIMESTAMP)
     url = db.Column(db.String(100))
     other_info = db.Column(db.String(100))
     blog_name = db.Column(db.String(100))
@@ -73,7 +71,7 @@ class PyNews(db.Model):
             'tags': self.tags,
             'read_count': self.read_count,
             'comment_count': self.comment_count,
-            'pub_time': str(self.pub_time).split(' ')[0],
+            'pub_time': self.pub_time,
             'url': self.url,
             'other_info': self.other_info,
             'blog_name': self.blog_name,
