@@ -83,7 +83,10 @@ def edit(article_id):
 
             page_data.title = form.title.data
             page_data.text = form.text.data
-            page_data.update = datetime.datetime.now()
+            page_data.update_time = datetime.datetime.now()
+            page_data.tags = form.tags.data
+
+            page_data.category = form.category.data
 
             db.session.commit()
             flash('Edit Saved.', category='success')
@@ -91,9 +94,15 @@ def edit(article_id):
         else:
             title = form.title.data
             text = form.text.data
+            category = form.category.data
+            tags = form.tags.data
+
             create_time = datetime.datetime.now()
+
             new_article = Article(title=title,
                                   text=text,
+                                  category=category,
+                                  tags=tags,
                                   create_time=create_time)
 
             db.session.add(new_article)
