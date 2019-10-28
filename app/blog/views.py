@@ -83,7 +83,7 @@ def edit(article_id):
 
             page_data.title = form.title.data
             page_data.text = form.text.data
-            page_data.update_time = datetime.datetime.now()
+            page_data.update_time = datetime.datetime(2015, 4, 19, 12, 20)
             page_data.tags = form.tags.data
 
             page_data.category = form.category.data
@@ -97,7 +97,7 @@ def edit(article_id):
             category = form.category.data
             tags = form.tags.data
 
-            create_time = datetime.datetime.now()
+            create_time = datetime.datetime(2015, 4, 19, 12, 20)
 
             new_article = Article(title=title,
                                   text=text,
