@@ -81,7 +81,18 @@
                     width: "100%",
                     height: 640,
                     syncScrolling: "single",
+                    watch : true,
                     path: "{{ url_for('static',filename='editormd/lib/') }}"
+                });
+            });
+        </script>
+        <script type="text/javascript">
+            $(function () {
+                editormd("fancy-editormd", {
+                    // ...
+                    imageUpload : true,
+                    imageFormats : [ "jpg", "jpeg", "gif", "png", "bmp", "webp" ],
+                    imageUploadURL : "{{ url_for('.upload') }}",
                 });
             });
         </script>
