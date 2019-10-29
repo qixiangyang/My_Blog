@@ -35,9 +35,12 @@
    
 3. 内容编辑页面及预览内容，修改完可以保存内容，格式Markdown  
    使用markdown.md这个插件作为编辑器。
+   完成 2019.10.27
    
 4. 数据字段坑
    PostgreSQL Datetime 字段为timestamps
    在插入数据时， 应使用 datetime.datetime(2015, 4, 19, 12, 20)
+   完成 2019.10.29
    
+5. 文章插入图片
    
