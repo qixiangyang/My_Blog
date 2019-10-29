@@ -79,11 +79,13 @@ def edit(article_id):
     if form.validate_on_submit():
 
         if article_id != 'new':
-            page_data = Article.query.filter_by(id=article_id).first()
 
+            now = datetime.datetime.now()
+
+            page_data = Article.query.filter_by(id=article_id).first()
             page_data.title = form.title.data
             page_data.text = form.text.data
-            page_data.update_time = datetime.datetime(2015, 4, 19, 12, 20)
+            page_data.update_time = datetime.datetime(now.year, now.month, now.day, now.hour, now.minute, now.second)
             page_data.tags = form.tags.data
 
             page_data.category = form.category.data
@@ -92,12 +94,14 @@ def edit(article_id):
             flash('Edit Saved.', category='success')
 
         else:
+            now = datetime.datetime.now()
+
             title = form.title.data
             text = form.text.data
             category = form.category.data
             tags = form.tags.data
 
-            create_time = datetime.datetime(2015, 4, 19, 12, 20)
+            create_time = datetime.datetime(now.year, now.month, now.day, now.hour, now.minute, now.second)
 
             new_article = Article(title=title,
                                   text=text,
