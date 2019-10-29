@@ -1,10 +1,12 @@
-from flask import render_template, request, flash, redirect, url_for
+from flask import render_template, request, flash, redirect, url_for, jsonify, Response
 from flask_login import login_required
 from . import blog
 from .. import db
 from .forms import PostForm
 from ..models import Article, PyNews
 import datetime
+from pathlib import Path
+import random
 
 
 @blog.route('/pyhub')
@@ -60,7 +62,7 @@ def contents():
     :return: 返回内容列表页
     """
     page = request.args.get('page', 1, type=int)
-    pagination = Article.query.order_by(Article.create_time.desc()).paginate(page, per_page=10, error_out=False)
+    pagination = Article.query.order_by(Article.update_time.desc()).paginate(page, per_page=10, error_out=False)
     posts = pagination.items
     now_page_data = [x.to_json() for x in posts]
 
@@ -100,14 +102,15 @@ def edit(article_id):
             text = form.text.data
             category = form.category.data
             tags = form.tags.data
-
+            author = '加油马德里'
             create_time = datetime.datetime(now.year, now.month, now.day, now.hour, now.minute, now.second)
 
             new_article = Article(title=title,
                                   text=text,
                                   category=category,
                                   tags=tags,
-                                  create_time=create_time)
+                                  create_time=create_time,
+                                  author=author)
 
             db.session.add(new_article)
             db.session.flush()
@@ -134,6 +137,39 @@ def edit(article_id):
         form.text.data = ''
 
         return render_template('editor/contents_edit.html', form=form, post=page_data)
+
+
+@blog.route('/upload/', methods=['POST'])
+@login_required
+def upload():
+    file = request.files.get('editormd-image-file')
+    if not file:
+        res = {
+            'success': 0,
+            'message': '上传失败'
+        }
+    else:
+        ex = file.filename.split('.')[1]
+        filename = str(int(datetime.datetime.now().timestamp())) + str(random.randint(1, 1000)) + '.' + ex
+        parts = ['app', 'upload', 'pic', filename]
+        path = Path.cwd().joinpath(*parts)
+        file.save(str(path))
+
+        res = {
+            'success': 1,
+            'message': '上传成功',
+            'url': url_for('.image', name=filename)
+        }
+    return jsonify(res)
+
+
+@blog.route('/image/<name>')
+def image(name):
+    parts = ['app', 'upload', 'pic', name]
+    path = Path.cwd().joinpath(*parts)
+    with open(str(path), 'rb') as f:
+        resp = Response(f.read(), mimetype="image/jpeg")
+    return resp
 
 
 @blog.route('/delete_article/<article_id>')
