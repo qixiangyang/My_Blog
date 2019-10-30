@@ -30,17 +30,20 @@
 
             {% block container %}
 
-            {% include "header.html" %}<!--引入网页的头部模板-->
+                {% include "header.html" %}<!--引入网页的头部模板-->
 
-            <div class="row row-offcanvas row-offcanvas-right".>
+                <div class="row row-offcanvas row-offcanvas-right".>
 
-                {% block content %}<!--自定义模板区域-->
+                    {% block content %}<!--自定义模板区域-->
+                    {% endblock %}
+                    {% include "sidebar.html" %}<!--引入网页的侧边模板-->
+
+                </div><!--/row-->
+
+                {% block footer %}
+                    {% include "footer.html" %}<!--引入网页的底部模板-->
                 {% endblock %}
-                {% include "sidebar.html" %}<!--引入网页的侧边模板-->
 
-            </div><!--/row-->
-
-            {% include "footer.html" %}<!--引入网页的底部模板-->
 
             {% endblock %}
 
@@ -58,4 +61,6 @@
         {% endblock %}
 
     </body>
+
+
 </html>
