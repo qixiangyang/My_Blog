@@ -4,3 +4,4 @@ venv
 .flaskenv
 _config.yml
 config.py
+*.jpg
