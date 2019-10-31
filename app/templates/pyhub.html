@@ -20,6 +20,7 @@
                 </p>
             </div>
         {% endfor %}
+
         {% if pagination %}
         <div class="pagination center-block text-center">
             {{ macros.pagination_widget(pagination, '.pyhub') }}
@@ -27,11 +28,11 @@
     {% endif %}
     </div>
 
-    {% block footer %}
-        {% include "footer.html" %}
-        <b> 本页内容使用均遵循相关开源协议，部分内容获得作者本人授权 </b>
-    {% endblock %}
+{% endblock %}
 
+{% block footer %}
+    {% include "footer.html" %}
+    <b> 本页内容使用均遵循相关开源协议，部分内容获得作者本人授权 </b>
 {% endblock %}
 
 
