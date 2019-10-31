@@ -1,12 +1,9 @@
-{% extends "base.html" %}<!--继承基础模板-->
+{% extends "base.html" %}
 {% import "_macros.html" as macros %}
-{% block content %}<!--自定义模板区域-->
-
+{% block content %}
 
     <div class="col-xs-9">
-        <div class="alert text-center" style="font-size: 18px; background-color: #c8c8c8">
-            <p style="text-emphasis: #999999">本页面展示内容均获原作者授权</p>
-        </div>
+
         {% for data in page_data %}
             <div class="alert" style="background-color: #f6f6f6">
                 <h2>
@@ -23,12 +20,19 @@
                 </p>
             </div>
         {% endfor %}
+
         {% if pagination %}
         <div class="pagination center-block text-center">
             {{ macros.pagination_widget(pagination, '.pyhub') }}
         </div>
     {% endif %}
     </div>
+
+{% endblock %}
+
+{% block footer %}
+    {% include "footer.html" %}
+    <b> 本页内容使用均遵循相关开源协议，部分内容获得作者本人授权 </b>
 {% endblock %}
 
 
