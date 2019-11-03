@@ -101,14 +101,10 @@ sudo systemctl restart nginx
 重新加载，因为一般重新配置之后，不希望重启服务，这时可以使用重新加载。  
 sudo systemctl reload nginx  
 检查服务状态  
-systemctl status nginx.service  
+systemctl status nginx.service
+查看 Nginx配置位置
+locate nginx.conf
 
-配置  
-location /api/ {
-    proxy_pass http://127.0.0.1:5000/;
-    #proxy_set_header Host $host;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-}
 
 
 ### gunicorn 配置
