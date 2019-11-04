@@ -32,11 +32,11 @@
        完成 2019.11.03
 
     5. 爬虫日志的添加
-    
+       完成 2019.11.03
     
     6. 定时任务的添加
     
-    7. 渲染的问题，文章markdown渲染的效果不尽如人意
+    7. 渲染的问题，文章markdown渲染的效果不尽如人
        使用editor.md 作为渲染markdown的引擎。
        完成 2019.11.01
     
@@ -46,6 +46,8 @@
     9. 遇到一个坑，在登录后台，重定向失败，是Nginx没有配置端口：
     参见：https://stackoverflow.com/questions/41348714/flasknginxgunicorn-redirect-error
     完成 2019.11.03
+    
+    10. ETL日志添加
     
 ### 新增内容管理平台。
 
@@ -80,8 +82,6 @@
 
     1. https://blog.ansheng.me/
     2. https://www.the5fire.com/
-    
-
 
 
 
