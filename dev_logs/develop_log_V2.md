@@ -49,6 +49,12 @@
     
     10. ETL日志添加
     
+    
+    11. 爬虫日志重复
+        就是你第二次调用log的时候，根据getLogger(name)里的name获取同一个logger，而这个logger里已经有了第一次你添加的handler，
+        第二次调用又添加了一个handler，所以，这个logger里有了两个同样的handler，以此类推，调用几次就会有几个handler。。
+        https://blog.csdn.net/huilan_same/article/details/51858817
+    
 ### 新增内容管理平台。
 
     功能描述 
