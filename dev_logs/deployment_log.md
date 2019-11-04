@@ -101,14 +101,10 @@ sudo systemctl restart nginx
 重新加载，因为一般重新配置之后，不希望重启服务，这时可以使用重新加载。  
 sudo systemctl reload nginx  
 检查服务状态  
-systemctl status nginx.service  
+systemctl status nginx.service
+查看 Nginx配置位置
+locate nginx.conf
 
-配置  
-location /api/ {
-    proxy_pass http://127.0.0.1:5000/;
-    #proxy_set_header Host $host;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-}
 
 
 ### gunicorn 配置
@@ -136,7 +132,7 @@ stderr_logfile=/data/Blog_App/log/gunicorn.err
 ~~~
 
 supervisor常用命令
-supervisord -c supervisor.conf                             通过配置文件启动supervisor
+supervisor -c supervisor.conf                             通过配置文件启动supervisor
 supervisorctl -c supervisor.conf status                    察看supervisor的状态
 supervisorctl -c supervisor.conf reload                    重新载入 配置文件
 supervisorctl -c supervisor.conf start [all]|[appname]     启动指定/所有 supervisor管理的程序进程

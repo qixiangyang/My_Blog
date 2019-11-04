@@ -52,12 +52,11 @@ class PyNews(db.Model):
     read_count = db.Column(db.Integer)
     comment_count = db.Column(db.Integer)
     pub_time = db.Column(db.TIMESTAMP)
-    url = db.Column(db.String(100))
-    other_info = db.Column(db.String(100))
-    blog_name = db.Column(db.String(100))
-    line = db.Column(db.String(100))
+    url = db.Column(db.String(280))
+    other_info = db.Column(db.String(170))
+    blog_name = db.Column(db.String(160))
+    line = db.Column(db.String(150))
     status = db.Column(db.Integer, default=1)
-
 
     def __repr__(self):
         return '<title %r author %r>' % (self.title, self.author)

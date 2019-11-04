@@ -18,18 +18,42 @@
        完成 2019.10.31  
     
     3. ETL层的新增
-       就是所谓的parser
-       多一个数据库，线上数据库不变(最后增加了一个status字段)，spider入库方式作出改变，字段也进行修改
+       将页面数据下载与解析过程分离，将各个模块解耦。
+       工作分解
+       1. 新建爬虫数据库 spider_warehouse
+       2. 新建页面解析代码 spider_warehouse —> pyhub 
+       线上数据库不变(新增一个status字段)。
        完成 2019.10.31
        
     3. 时间字段修改为时间戳
        提供更加准确的时间存储 datetime.datetime(2015, 4, 19, 12, 20)
        
     4. 显示成距离现在的时间
+       完成 2019.11.03
 
-    5. 日志的添加
+    5. 爬虫日志的添加
+       完成 2019.11.03
     
     6. 定时任务的添加
+    
+    7. 渲染的问题，文章markdown渲染的效果不尽如人
+       使用editor.md 作为渲染markdown的引擎。
+       完成 2019.11.01
+    
+    8. Nginx配置ssl证书
+       完成 2019.11.03
+    
+    9. 遇到一个坑，在登录后台，重定向失败，是Nginx没有配置端口：
+       参见：https://stackoverflow.com/questions/41348714/flasknginxgunicorn-redirect-error
+       完成 2019.11.03
+    
+    10. ETL日志添加
+    
+    
+    11. 爬虫日志重复
+        就是你第二次调用log的时候，根据getLogger(name)里的name获取同一个logger，而这个logger里已经有了第一次你添加的handler，
+        第二次调用又添加了一个handler，所以，这个logger里有了两个同样的handler，以此类推，调用几次就会有几个handler。。
+        https://blog.csdn.net/huilan_same/article/details/51858817
     
 ### 新增内容管理平台。
 
@@ -63,9 +87,8 @@
 ### 扩增2个数据源
 
     1. https://blog.ansheng.me/
+       完成 2019.10.29
     2. https://www.the5fire.com/
-    
-
 
 
 
