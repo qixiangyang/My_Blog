@@ -41,11 +41,11 @@
        完成 2019.11.01
     
     8. Nginx配置ssl证书
-    完成 2019.11.03
+       完成 2019.11.03
     
     9. 遇到一个坑，在登录后台，重定向失败，是Nginx没有配置端口：
-    参见：https://stackoverflow.com/questions/41348714/flasknginxgunicorn-redirect-error
-    完成 2019.11.03
+       参见：https://stackoverflow.com/questions/41348714/flasknginxgunicorn-redirect-error
+       完成 2019.11.03
     
     10. ETL日志添加
     
@@ -81,6 +81,7 @@
 ### 扩增2个数据源
 
     1. https://blog.ansheng.me/
+       完成 2019.10.29
     2. https://www.the5fire.com/
 
 
