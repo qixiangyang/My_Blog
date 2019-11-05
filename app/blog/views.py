@@ -25,6 +25,19 @@ def pyhub():
 
 
 @blog.route('/')
+def index():
+    """
+    返回主页和自己的文章页
+    """
+
+    page = request.args.get('page', 1, type=int)
+    pagination = Article.query.order_by(Article.create_time.desc()).paginate(page, per_page=10, error_out=False)
+    posts = pagination.items
+    now_page_data = [x.to_json() for x in posts]
+
+    return render_template('index.html', page_data=now_page_data, pagination=pagination)
+
+
 @blog.route('/archives', methods=['GET'])
 def archives():
     """
