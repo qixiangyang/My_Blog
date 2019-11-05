@@ -87,9 +87,9 @@ def edit(article_id):
             page_data = Article.query.filter_by(id=article_id).first()
             page_data.title = form.title.data
             page_data.text = form.text.data
+            page_data.text_pre = form.text_pre.data
             page_data.update_time = datetime.datetime(now.year, now.month, now.day, now.hour, now.minute, now.second)
             page_data.tags = form.tags.data
-
             page_data.category = form.category.data
 
             db.session.commit()
@@ -100,6 +100,7 @@ def edit(article_id):
 
             title = form.title.data
             text = form.text.data
+            text_pre = form.text_pre.data
             category = form.category.data
             tags = form.tags.data
             author = '加油马德里'
@@ -107,6 +108,7 @@ def edit(article_id):
 
             new_article = Article(title=title,
                                   text=text,
+                                  text_pre=text_pre,
                                   category=category,
                                   tags=tags,
                                   create_time=create_time,
@@ -127,6 +129,7 @@ def edit(article_id):
 
         form.title.data = page_data.title
         form.text.data = page_data.text
+        form.text_pre.data = page_data.text_pre
         form.category.data = page_data.category
         form.tags.data = page_data.tags
 
@@ -135,6 +138,7 @@ def edit(article_id):
     else:
         form.title.data = ''
         form.text.data = ''
+        form.text_pre.data = ''
 
         return render_template('editor/contents_edit.html', form=form, post=page_data)
 
