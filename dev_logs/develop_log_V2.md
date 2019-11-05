@@ -54,6 +54,13 @@
         就是你第二次调用log的时候，根据getLogger(name)里的name获取同一个logger，而这个logger里已经有了第一次你添加的handler，
         第二次调用又添加了一个handler，所以，这个logger里有了两个同样的handler，以此类推，调用几次就会有几个handler。。
         https://blog.csdn.net/huilan_same/article/details/51858817
+        
+    12. 遇到一个坑supervisord.sock 默认在tmp目录，而此目录为缓存目录，Linux有可能将此目录下的内容清理，
+        导致supervisord不正常，表现在无法查看应用状态，无法重新读取应用配置，使得supervisord处于失控状态
+        
+        因此需要对配置中的目录进行修正。
+        利用ps -ef | grep supervisord杀进程，然后重启服务，记得杀掉gunnicorn进程。
+        完成 2019.11.04
     
 ### 新增内容管理平台。
 
