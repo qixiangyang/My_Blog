@@ -15,6 +15,7 @@ class Article(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(64), unique=True)
     text = db.Column(db.String(10000))
+    text_pre = db.Column(db.String(500))
     author = db.Column(db.String(20))
     category = db.Column(db.String(20))
     tags = db.Column(db.String(50))
@@ -30,6 +31,7 @@ class Article(db.Model):
             'id': self.id,
             'title': self.title,
             'text': self.text,
+            'text_pre': self.text_pre,
             'author': self.author,
             'category': self.category,
             'tags': self.tags,
