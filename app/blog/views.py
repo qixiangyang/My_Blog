@@ -9,21 +9,6 @@ from pathlib import Path
 import random
 
 
-@blog.route('/pyhub')
-def pyhub():
-    """
-    返回Py资讯页面
-    """
-
-    page = request.args.get('page', 1, type=int)
-    pagination = PyNews.query.order_by(PyNews.pub_time.desc()).limit(200).from_self().paginate(page, per_page=20, error_out=False)
-    posts = pagination.items
-
-    now_page_data = [x.to_json() for x in posts]
-
-    return render_template('pyhub.html', page_data=now_page_data,  pagination=pagination)
-
-
 @blog.route('/')
 def index():
     """
@@ -50,6 +35,21 @@ def archives():
     now_page_data = [x.to_json() for x in posts]
 
     return render_template('archives.html', page_data=now_page_data, pagination=pagination)
+
+
+@blog.route('/pyhub')
+def pyhub():
+    """
+    返回Py资讯页面
+    """
+
+    page = request.args.get('page', 1, type=int)
+    pagination = PyNews.query.filter(PyNews.status != -1).order_by(PyNews.pub_time.desc()).limit(200).from_self().paginate(page, per_page=20, error_out=False)
+    posts = pagination.items
+
+    now_page_data = [x.to_json() for x in posts]
+
+    return render_template('pyhub.html', page_data=now_page_data,  pagination=pagination)
 
 
 @blog.route('/about')
