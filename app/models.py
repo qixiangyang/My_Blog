@@ -83,6 +83,16 @@ class PyNews(db.Model):
         return json_data
 
 
+class Click(db.Model):
+    __tablename__ = 'access_log'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    route = db.Column(db.String(20))
+    time = db.Column(db.TIMESTAMP)
+    ip_address = db.Column(db.String(20))
+    cookie = db.Column(db.String())
+    user_agent = db.Column(db.String())
+
+
 class Role(db.Model):
     __tablename__ = 'roles'
     id = db.Column(db.Integer, primary_key=True)
