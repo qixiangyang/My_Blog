@@ -1,20 +1,43 @@
 from flask import render_template, request, flash, redirect, url_for, jsonify, Response
 from flask_login import login_required
+from functools import wraps
 from . import blog
 from .. import db
 from .forms import PostForm
-from ..models import Article, PyNews
+from ..models import Article, PyNews, Click
 import datetime
 from pathlib import Path
 import random
 
 
+def log_access(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        now = datetime.datetime.now()
+        func_name = f.__name__
+        ip = request.remote_addr
+        cookie = str(request.cookies)
+        user_agent = str(request.user_agent)
+        access_data = Click(route=func_name,
+                            time=datetime.datetime(now.year, now.month, now.day, now.hour, now.minute, now.second),
+                            ip_address=ip,
+                            cookie=cookie,
+                            user_agent=user_agent)
+        try:
+            db.session.add(access_data)
+            db.session.commit()
+        except ConnectionError as e:
+            print(e)
+        return f(*args, **kwargs)
+    return wrapper
+
+
 @blog.route('/')
+@log_access
 def index():
     """
     返回主页和自己的文章页
     """
-
     page = request.args.get('page', 1, type=int)
     pagination = Article.query.order_by(Article.create_time.desc()).paginate(page, per_page=10, error_out=False)
     posts = pagination.items
@@ -24,6 +47,7 @@ def index():
 
 
 @blog.route('/archives', methods=['GET'])
+@log_access
 def archives():
     """
     返回主页和自己的文章页
@@ -38,6 +62,7 @@ def archives():
 
 
 @blog.route('/pyhub')
+@log_access
 def pyhub():
     """
     返回Py资讯页面
@@ -53,11 +78,13 @@ def pyhub():
 
 
 @blog.route('/about')
+@log_access
 def about():
     return render_template('about.html')
 
 
 @blog.route('/archives/<article_id>')
+@log_access
 def article(article_id):
     """
     :param article_id:
@@ -80,6 +107,19 @@ def contents():
     now_page_data = [x.to_json() for x in posts]
 
     return render_template('editor/contents_list.html', page_data=now_page_data, pagination=pagination)
+
+
+@blog.route('/delete_article/<article_id>')
+@login_required
+def delete_article(article_id):
+    """
+    删除选定的文章并重定向本页
+    """
+    res = Article.query.filter_by(id=article_id).first()
+    db.session.delete(res)
+    db.session.commit()
+
+    return redirect(url_for('blog.contents'))
 
 
 @blog.route('/edit/<article_id>', methods=['GET', 'POST'])
@@ -187,19 +227,6 @@ def image(name):
     with open(str(path), 'rb') as f:
         resp = Response(f.read(), mimetype="image/jpeg")
     return resp
-
-
-@blog.route('/delete_article/<article_id>')
-@login_required
-def delete_article(article_id):
-    """
-    删除选定的文章并重定向本页
-    """
-    res = Article.query.filter_by(id=article_id).first()
-    db.session.delete(res)
-    db.session.commit()
-
-    return redirect(url_for('blog.contents'))
 
 
 @blog.errorhandler(404)
