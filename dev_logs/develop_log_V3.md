@@ -53,3 +53,8 @@ V 2.1.2已经上线，基本功能已经完善，还有一些地方需要优化�
    https://manjusaka.itscoder.com/archives/
    https://www.dongwm.com/
    完成：2019.11.06
+   
+   
+7. 解决的index页第一个markdown解析后面不解析的问题。
+   原因：多个div访问一个id似乎只有第一个能拿到，剩下的无法获得这个id对应的js函数
+   解决方案：为每一个数据遍历生成一个单独的JS函数
