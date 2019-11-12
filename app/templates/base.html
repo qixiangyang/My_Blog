@@ -8,7 +8,7 @@
         <meta name="description" content="加油马德里的博客">
         <meta name="author" content="加油马德里">
         <link rel="icon" href="{{ url_for('static', filename='images/logo.jpeg') }}">
-        <title>{% block title %}加油马德里的主页{% endblock %}</title>
+        <title>加油马德里的主页</title>
 
         {% block css %}　<!--css模块区域-->
         <!-- Bootstrap core CSS -->
@@ -29,14 +29,14 @@
                 {% include "header.html" %}
 
                 <div class="row row-offcanvas row-offcanvas-right".>
-                    {% block content %}
-                    {% endblock %}
+                    {% block content %}{% endblock %}
                     {% include "sidebar.html" %}
                 </div>
 
                 {% block footer %}
                     {% include "footer.html" %}
                 {% endblock %}
+
             {% endblock %}
         </div>
 
@@ -47,6 +47,4 @@
         {% endblock %}
 
     </body>
-
-
 </html>

@@ -12,8 +12,9 @@ from wtforms.validators import DataRequired, Length
 
 
 class PostForm(FlaskForm):
-    title = StringField('Title', [DataRequired(), Length(max=255)])
-    text = TextAreaField('Content', [DataRequired()])
-    category = StringField('Category', [DataRequired(), Length(max=255)])
-    tags = StringField('Tags', [DataRequired(), Length(max=255)])
+    title = StringField('标题', [DataRequired(), Length(max=255)])
+    text = TextAreaField('内容', [DataRequired()])
+    text_pre = TextAreaField('预览', [DataRequired()])
+    category = StringField('分类', [DataRequired(), Length(max=255)])
+    tags = StringField('标签', [DataRequired(), Length(max=255)])
 

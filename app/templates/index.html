@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% import "_macros.html" as macros %}
+{% block content %}
+
+    <link rel="stylesheet" href="{{ url_for('static',filename='editormd/css/editormd.css') }}"/>
+    <style type="text/css">
+        textarea
+        {
+            width:100%;
+        }
+        .textwrapper
+        {
+            margin:5px 0;
+            padding:3px;
+        }
+    </style>
+    <div class="col-xs-9">
+        {% for data in page_data %}
+            <div>
+
+                <h2>
+                    <a style="color: #1b6d85" href="{{'archives/' ~ data.id|string}}"> {{ data.title }} </a>
+                </h2>
+
+                <p>
+                    作者：{{ data.author }} &nbsp
+                    | &nbsp 发布时间：&nbsp{{ data.create_time }} &nbsp
+                    | &nbsp 标签：&nbsp{{ data.category }}
+                </p>
+
+                <div id="{{"editormd-view" ~ data.id|string}}" class="content textwrapper">
+                    <textarea style="size: auto" name="editormd-markdown-doc"> {{ data.text }} </textarea>
+                </div>
+
+                <hr>
+            </div>
+
+        {% endfor %}
+
+        {% if pagination %}
+            <div class="pagination center-block text-center">
+                {{ macros.pagination_widget(pagination, '.index') }}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ super() }}
+    <script src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='editormd/lib/marked.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='editormd/lib/prettify.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='editormd/lib/raphael.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='editormd/lib/underscore.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='editormd/lib/sequence-diagram.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='editormd/lib/flowchart.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='editormd/lib/jquery.flowchart.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='editormd/editormd.js') }}"></script>
+    <script src="{{ url_for('static',filename='editormd/editormd.min.js') }}"></script>
+
+    {% for data in page_data %}
+        <script type="text/javascript">
+            var {{"testEditormdView2" ~ data.id|string}} = editormd.markdownToHTML("{{"editormd-view" ~ data.id|string}}", {
+                htmlDecode      : "style,script,iframe",  // you can filter tags decode
+                emoji           : true,
+                taskList        : true,
+                tex             : false,  // 默认不解析
+                flowChart       : true,  // 默认不解析
+                sequenceDiagram : true,  // 默认不解析
+            });
+        </script>
+    {% endfor %}
+
+{% endblock %}
+

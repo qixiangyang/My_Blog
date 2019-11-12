@@ -35,6 +35,7 @@
        完成 2019.11.03
     
     6. 定时任务的添加
+       完成 2019.11.04
     
     7. 渲染的问题，文章markdown渲染的效果不尽如人
        使用editor.md 作为渲染markdown的引擎。
@@ -96,6 +97,7 @@
     1. https://blog.ansheng.me/
        完成 2019.10.29
     2. https://www.the5fire.com/
+       完成 2019.11.05
 
 
 
