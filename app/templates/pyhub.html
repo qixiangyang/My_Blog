@@ -2,10 +2,31 @@
 {% import "_macros.html" as macros %}
 {% block content %}
 
-    <div class="col-xs-9">
+    <style type="text/css">
+        .scrollingBox {
+            height:100%;
+            width:100%;
+            overflow: auto;
+            white-space: normal;    /* Suppress line breaks */
+            display: inline-block;
+        }
+        .item {
+            display: inline-block;  /* Display the items as inline-block            */
+            vertical-align: top;    /* Align the inline items vertically at the top */
+            height:100%;
+            width:100%;
+        }
+        .textwrapper
+        {
+            margin:5px 0;
+            padding:3px;
+        }
+    </style>
+
+    <div class="col-xs-9 fa-stack-overflow">
 
         {% for data in page_data %}
-            <div class="alert" style="background-color: #f6f6f6">
+            <div class="alert" style="background-color: #f6f6f6; width: 100%">
                 <h2>
                     <a style="color: #1b6d85" href="{{data.url}}"> {{ data.title }} </a>
                 </h2>
@@ -15,9 +36,13 @@
                     | &nbsp 分类：&nbsp{{ data.category }}
                 </p>
                 <br>
-                <p> {{ data.preview|safe }}
-                    <a href="{{data.url}}" style="right: initial">查看原文</a>
-                </p>
+                <div class="container item scrollingBox textwrapper" style="width: 100%">
+                    <div class="item scrollingBox">
+                        {{ data.preview|safe }}
+                    </div>
+
+                </div>
+                <a href="{{data.url}}" style="right: initial">查看原文</a>
             </div>
         {% endfor %}
 
