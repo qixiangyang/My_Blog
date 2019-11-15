@@ -14,6 +14,7 @@
 
 5. 登陆过期
    现在内容页编辑登陆后，无过期自动注销问题，有一定的安全风险。
+   https://stackoverflow.com/questions/2229825/where-can-i-set-environment-variables-that-crontab-will-use
    完成：2019.11.15
 
 6. BUG：在内容页跳转到文章页时，跳转到带端口号的网址上
@@ -34,3 +35,5 @@
 
 
 10 jinja2代码格式混乱
+   https://stackoverflow.com/questions/21991479/jinja2-correctly-indent-included-block
+   可以设置代码缩进
