@@ -5,7 +5,7 @@ Date: 2019/10/24 3:34 下午
 File: views 
 """
 
-from flask import render_template, redirect, request, url_for, flash
+from flask import render_template, redirect, request, url_for, flash, session
 from flask_login import login_user, logout_user, login_required
 from . import auth
 from ..models import User
@@ -22,6 +22,7 @@ def login():
         if user is not None and user.verify_password(form.password.data):
             login_user(user, form.remember_me.data)
             next = request.args.get('next')
+            session.permanent = True
             if next is None or not next.startswith('/'):
                 next = url_for('blog.contents')
             return redirect(next)
