@@ -5,7 +5,9 @@
 2. 新增4个数据源
 
    http://prodesire.cn/archives/
+   完成: 2019.11.16
    http://greyli.com/posts/
+   
    https://vimiix.com/archives
    https://darkof.me/archives/
    https://www.kingname.info/
