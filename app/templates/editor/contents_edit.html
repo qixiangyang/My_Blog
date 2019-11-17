@@ -55,19 +55,24 @@
                 </div>
 
             </div>
-
             <div>
                 {{ form.text_pre.label }}
                 {{ form.text_pre(class_='form-control') }}
             </div>
+            <br>
+            <div>
+                {{ form.save.label }}
+                <br>
+                {{ form.save(class="btn btn-info left") }}
+            </div>
+        <br>
+        {% if post %}
+            <input class="btn btn-primary right" type="submit" value="修改">
+        {% else %}
+            <input class="btn btn-primary right" type="submit" value="新增">
+        {% endif %}
 
             <br>
-
-        {% if post %}
-            <input class="btn btn-primary" type="submit" value="修改">
-        {% else %}
-            <input class="btn btn-primary" type="submit" value="新增">
-        {% endif %}
 
         </form>
     </div>
