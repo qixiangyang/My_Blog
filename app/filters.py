@@ -34,5 +34,9 @@ def handle_time(time):
         elif 60 * 60 * 24 * 30 <= timestamp < 60 * 60 * 24 * 30 * 12:
             days = timestamp / (60 * 60 * 24 * 30)
             return "%s月前" % int(days)
+
+        elif 60 * 60 * 24 * 30 * 12 <= timestamp < 60 * 60 * 24 * 30 * 12 * 100:
+            days = timestamp / (60 * 60 * 24 * 30 * 12)
+            return "%s年前" % int(days)
         else:
-            return time.strftime('%Y/%M/%d %H:%M')
+            return time.strftime('%Y-%m-%d %H:%M')
