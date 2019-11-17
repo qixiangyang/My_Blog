@@ -39,4 +39,4 @@ def handle_time(time):
             days = timestamp / (60 * 60 * 24 * 30 * 12)
             return "%s年前" % int(days)
         else:
-            return time.strftime('%Y-%M-%d %H:%M')
+            return time.strftime('%Y-%m-%d %H:%M')
