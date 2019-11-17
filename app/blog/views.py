@@ -39,7 +39,7 @@ def index():
     返回主页和自己的文章页
     """
     page = request.args.get('page', 1, type=int)
-    pagination = Article.query.order_by(Article.create_time.desc()).paginate(page, per_page=10, error_out=False)
+    pagination = Article.query.filter(Article.status != -1).order_by(Article.create_time.desc()).paginate(page, per_page=10, error_out=False)
     posts = pagination.items
     now_page_data = [x.to_json() for x in posts]
 
@@ -54,7 +54,7 @@ def archives():
     """
 
     page = request.args.get('page', 1, type=int)
-    pagination = Article.query.order_by(Article.create_time.desc()).paginate(page, per_page=10, error_out=False)
+    pagination = Article.query.filter(Article.status != -1).order_by(Article.create_time.desc()).paginate(page, per_page=10, error_out=False)
     posts = pagination.items
     now_page_data = [x.to_json() for x in posts]
 
@@ -144,7 +144,10 @@ def edit(article_id):
             page_data.update_time = datetime.datetime(now.year, now.month, now.day, now.hour, now.minute, now.second)
             page_data.tags = form.tags.data
             page_data.category = form.category.data
-
+            if form.save.data:
+                page_data.status = -1
+            else:
+                page_data.status = 1
             db.session.commit()
             flash('Edit Saved.', category='success')
 
@@ -158,6 +161,10 @@ def edit(article_id):
             tags = form.tags.data
             author = '加油马德里'
             create_time = datetime.datetime(now.year, now.month, now.day, now.hour, now.minute, now.second)
+            if form.save.data:
+                status = -1
+            else:
+                status = 1
 
             new_article = Article(title=title,
                                   text=text,
@@ -165,7 +172,8 @@ def edit(article_id):
                                   category=category,
                                   tags=tags,
                                   create_time=create_time,
-                                  author=author)
+                                  author=author,
+                                  status=status)
 
             db.session.add(new_article)
             db.session.flush()

@@ -22,6 +22,7 @@ class Article(db.Model):
     create_time = db.Column(db.TIMESTAMP)
     update_time = db.Column(db.TIMESTAMP)
     other_info = db.Column(db.String(100))
+    status = db.Column(db.Integer, default=1)
 
     def __repr__(self):
         return '<title %r author %r>' % (self.title, self.author)
