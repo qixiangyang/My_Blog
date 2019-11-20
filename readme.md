@@ -8,11 +8,15 @@
 
 第二部分是一个Python开发者资讯聚合应用，主要是Python相关的博主的内容更新，这样不用再去扫Blog了，提升信息获取的效率.
 
+目前网站已经上线:http://qixiangyang.cn/
+
+欢迎大家访问并
+
 ## 技术栈
 ### 前端框架
 Bootstrap
 
-### web框架
+### Web框架
 Flask
 
 ### 数据库
@@ -25,6 +29,10 @@ Nginx
 psycopg2
 Flask-Markdown
 Faker
+gunicorn
+Flask-WTF
+SQLAlchemy
+等
 
 ### 文本编辑器
-Markdown.md
+editor.md
