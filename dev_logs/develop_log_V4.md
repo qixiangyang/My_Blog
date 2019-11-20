@@ -13,7 +13,7 @@
 4. 订阅邮件 一周更新一次
 
 5. 登陆过期
-   现在内容页编辑登陆后，无过期自动注销问题，有一定的安全风险。
+   现在内容页编辑登陆后，无过期自动注销，有一定的安全风险。
    https://stackoverflow.com/questions/2229825/where-can-i-set-environment-variables-that-crontab-will-use
    完成：2019.11.15
 
