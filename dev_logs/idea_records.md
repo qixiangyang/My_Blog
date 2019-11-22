@@ -19,3 +19,5 @@
 9. 爬虫 ETL celery 实践
 
 10. scrapy框架熟悉
+
+11. 集成部署实践 jenkins
