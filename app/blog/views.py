@@ -1,4 +1,5 @@
 from flask import render_template, request, flash, redirect, url_for, jsonify, Response
+from sqlalchemy import and_
 from flask_login import login_required
 from functools import wraps
 from . import blog
@@ -90,8 +91,11 @@ def article(article_id):
     :param article_id:
     :return: 返回单篇文章
     """
-    page_data = Article.query.filter_by(id=article_id).first()
-    return render_template('article_page.html', page_data=page_data)
+    page_data = Article.query.filter(and_(Article.id == article_id, Article.status != -1)).first()
+    if page_data:
+        return render_template('article_page.html', page_data=page_data)
+    else:
+        return render_template('404.html')
 
 
 @blog.route('/contents')
