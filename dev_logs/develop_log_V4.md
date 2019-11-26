@@ -1,8 +1,10 @@
 文档创建时间：2019.11.08
 
 1. 搜索栏目施工
+   挪到下一期
 
 2. 搜索结果页面
+   挪到下一期
 
 3. 定时任务
    定时任务不执行原因，crontab不能正确读取当前账号的环境变量，参见：
@@ -37,3 +39,6 @@
 10 jinja2代码格式混乱
    https://stackoverflow.com/questions/21991479/jinja2-correctly-indent-included-block
    可以设置代码缩进
+   
+  
+全部完成 2019.11.26
