@@ -17,6 +17,7 @@
    完成: 2019.11.22
       
    https://foofish.net/
+   完成：2019.12.01
    
    https://juejin.im/user/59df53d151882578d30167e6/posts
    韦世东
@@ -43,12 +44,10 @@
 
 
 9. 搜索栏目施工
-   挪到下一期
+   Elasticsearch  do it quick
 
 10. 搜索结果页面
-   挪到下一期
-   
-
+      
 11. Flask flash未生效
    在页面中未引用flash信息
    

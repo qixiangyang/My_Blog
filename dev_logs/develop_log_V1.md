@@ -103,6 +103,7 @@
     添加 
     export FLASK_ENVIRONMENT=production
     export FLASK_ENV=production
+   
     export FLASK_ENVIRONMENT=development
     export FLASK_ENV=development
     source ~/.bashrc
