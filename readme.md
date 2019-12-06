@@ -13,6 +13,7 @@
 欢迎大家访问并提意见
 
 ## 技术栈
+
 ### 前端样式
 Bootstrap
 
@@ -22,14 +23,14 @@ Flask
 ### 数据库
 PostgreSQL、Redis
 
+### 代理服务器
+Nginx
+
 ### Web服务器
 Gunicorn
 
 ### 守护进程
 Supervisor
-
-### 代理服务器
-Nginx
 
 ### 用到的包
 psycopg2
