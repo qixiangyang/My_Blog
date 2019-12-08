@@ -59,6 +59,21 @@
     {{ super() }}
 
     <div class="col-xs-3 sidebar-offcanvas" id="sidebar">
+
+        <form method="post" action="{{ url_for('blog.pyhub') }}">
+
+            {{ form.hidden_tag() }}
+
+            <div class="form-group">
+                {{ form.blog_source.label }}
+                    {{ form.blog_source(rows=3, class_='form-control', placeholder="请提交博客地址，例：qixiangyang.cn") }}
+                <br>
+                <input class="btn btn-primary right" type="submit" value="提交">
+
+            </div>
+
+        </form>
+
         <div class="list-group">
 
             <a class="list-group-item active">
