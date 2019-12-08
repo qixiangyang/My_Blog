@@ -28,9 +28,11 @@
             {% block container %}
                 {% include "header.html" %}
 
-                <div class="row row-offcanvas row-offcanvas-right".>
+                <div class="row row-offcanvas row-offcanvas-right">
                     {% block content %}{% endblock %}
-                    {% include "sidebar.html" %}
+                    {% block sidebar %}
+                        {% include "sidebar.html" %}
+                    {% endblock %}
                 </div>
 
                 {% block footer %}
