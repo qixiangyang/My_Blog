@@ -19,3 +19,7 @@ class PostForm(FlaskForm):
     tags = StringField('标签', [DataRequired(), Length(max=255)])
     save = SubmitField('存草稿')
 
+
+class SourceForm(FlaskForm):
+    blog_source = StringField('博客推荐', [DataRequired(), Length(max=255)])
+
