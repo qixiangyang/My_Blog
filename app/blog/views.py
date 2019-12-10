@@ -80,13 +80,15 @@ def pyhub():
     form = SourceForm()
 
     if form.validate_on_submit():
-        print(form.blog_source.data)
+
         mail = Mail()
         msg = Message(subject='新的博客源',
                       recipients=['qixiangyangrm@foxmail.com'])
         # 邮件内容会以文本和html两种格式呈现，而你能看到哪种格式取决于你的邮件客户端。
         msg.html = '<b>{}<b>'.format(form.blog_source.data)
         mail.send(msg)
+        flash('博客源已经成功提交，博主会尽快添加，感谢支持')
+
     return render_template('pyhub.html', page_data=now_page_data,  pagination=pagination, form=form)
 
 
