@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% import "_macros.html" as macros %}
+
 {% block content %}
 
     <style type="text/css">
@@ -47,10 +48,60 @@
         {% endfor %}
 
         {% if pagination %}
-        <div class="pagination center-block text-center">
-            {{ macros.pagination_widget(pagination, '.pyhub') }}
+            <div class="pagination center-block text-center">
+                {{ macros.pagination_widget(pagination, '.pyhub') }}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block sidebar %}
+    {{ super() }}
+
+    <div class="col-xs-3 sidebar-offcanvas" id="sidebar">
+
+        <form method="post" action="{{ url_for('blog.pyhub') }}">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.blog_source.label }}
+                    {{ form.blog_source(rows=3, class_='form-control', placeholder="请提交博客地址，例：qixiangyang.cn") }}
+                <br>
+                <input class="btn btn-primary right" type="submit" value="提交">
+            </div>
+        </form>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message }}">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="list-group">
+
+            <a class="list-group-item active">
+                <span class="glyphicon glyphicon-align-left" aria-hidden="true"> 博主目录 </span>
+            </a>
+
+            <a href="https://www.kawabangga.com" class="list-group-item">卡瓦邦噶</a>
+            <a href="https://laike9m.com/blog" class="list-group-item">laike9m</a>
+            <a href="https://blog.ansheng.me" class="list-group-item">ansheng</a>
+            <a href="https://www.the5fire.com" class="list-group-item">the5fire</a>
+            <a href="https://manjusaka.itscoder.com" class="list-group-item">Manjusaka</a>
+            <a href="https://www.dongwm.com" class="list-group-item">小明明</a>
+            <a href="https://frostming.com" class="list-group-item">Frostming</a>
+            <a href="https://www.zlovezl.cn" class="list-group-item">Piglei</a>
+            <a href="http://prodesire.cn" class="list-group-item">Prodesire</a>
+            <a href="http://greyli.com" class="list-group-item">李辉</a>
+            <a href="https://www.vimiix.com" class="list-group-item">Vimiix</a>
+            <a href="https://www.kingname.info" class="list-group-item">谢乾坤</a>
+            <a href="https://foofish.net" class="list-group-item">Python之禅</a>
+
         </div>
-    {% endif %}
     </div>
 
 {% endblock %}
@@ -59,5 +110,3 @@
     {% include "footer.html" %}
     <b> 本页内容使用均遵循相关开源协议，部分内容获得作者本人授权 </b>
 {% endblock %}
-
-

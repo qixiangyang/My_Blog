@@ -1,10 +1,11 @@
-from flask import render_template, request, flash, redirect, url_for, jsonify, Response
+from flask import render_template, request, flash, redirect, url_for, jsonify, Response, current_app
 from sqlalchemy import and_
 from flask_login import login_required
+from flask_mail import Message, Mail
 from functools import wraps
 from . import blog
 from .. import db
-from .forms import PostForm
+from .forms import PostForm, SourceForm
 from ..models import Article, PyNews, Click
 import datetime
 from pathlib import Path
@@ -62,11 +63,12 @@ def archives():
     return render_template('archives.html', page_data=now_page_data, pagination=pagination)
 
 
-@blog.route('/pyhub')
+@blog.route('/pyhub', methods=['GET', 'POST'])
 @log_access
 def pyhub():
     """
     返回Py资讯页面
+    提交博客地址，成功后需要有提交信息
     """
 
     page = request.args.get('page', 1, type=int)
@@ -75,7 +77,24 @@ def pyhub():
 
     now_page_data = [x.to_json() for x in posts]
 
-    return render_template('pyhub.html', page_data=now_page_data,  pagination=pagination)
+    form = SourceForm()
+
+    if form.validate_on_submit():
+
+        mail = Mail()
+        msg = Message(subject='新的博客源',
+                      recipients=['qixiangyangrm@foxmail.com'])
+        # 邮件内容会以文本和html两种格式呈现，而你能看到哪种格式取决于你的邮件客户端。
+        msg.html = '<b>{}<b>'.format(form.blog_source.data)
+
+        try:
+            mail.send(msg)
+        except Exception as e:
+            current_app.logger.error('邮件发送失败，请排查:{}'.format(e))
+        finally:
+            flash('博客源已经成功提交，博主会尽快添加，感谢支持')
+
+    return render_template('pyhub.html', page_data=now_page_data,  pagination=pagination, form=form)
 
 
 @blog.route('/about')
