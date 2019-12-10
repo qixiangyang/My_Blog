@@ -1,4 +1,4 @@
-from flask import render_template, request, flash, redirect, url_for, jsonify, Response
+from flask import render_template, request, flash, redirect, url_for, jsonify, Response, current_app
 from sqlalchemy import and_
 from flask_login import login_required
 from flask_mail import Message, Mail
@@ -90,7 +90,7 @@ def pyhub():
         try:
             mail.send(msg)
         except Exception as e:
-            print(e)
+            current_app.logger.error('邮件发送失败，请排查:{}'.format(e))
         finally:
             flash('博客源已经成功提交，博主会尽快添加，感谢支持')
 
