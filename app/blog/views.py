@@ -68,7 +68,7 @@ def archives():
 def pyhub():
     """
     返回Py资讯页面
-    关于提交博客页面，成功后需要有提交信息
+    提交博客地址，成功后需要有提交信息
     """
 
     page = request.args.get('page', 1, type=int)
@@ -86,8 +86,13 @@ def pyhub():
                       recipients=['qixiangyangrm@foxmail.com'])
         # 邮件内容会以文本和html两种格式呈现，而你能看到哪种格式取决于你的邮件客户端。
         msg.html = '<b>{}<b>'.format(form.blog_source.data)
-        mail.send(msg)
-        flash('博客源已经成功提交，博主会尽快添加，感谢支持')
+
+        try:
+            mail.send(msg)
+        except Exception as e:
+            print(e)
+        finally:
+            flash('博客源已经成功提交，博主会尽快添加，感谢支持')
 
     return render_template('pyhub.html', page_data=now_page_data,  pagination=pagination, form=form)
 
