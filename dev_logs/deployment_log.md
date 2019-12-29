@@ -126,7 +126,7 @@ directory=/data/Blog_App                                                 ; 项�
 startsecs=0                                                                             ; 启动时间
 stopwaitsecs=0                                                                          ; 终止等待时间
 autostart=false                                                                         ; 是否自动启动
-autorestart=false                                                                       ; 是否自动重启
+autorestart=false                                                                      ; 是否自动重启
 stdout_logfile=/data/Blog_App/log/gunicorn.log                           ; log 日志
 stderr_logfile=/data/Blog_App/log/gunicorn.err
 ~~~
