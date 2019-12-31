@@ -13,6 +13,9 @@ import random
 
 
 def log_access(f):
+    """
+    一个装饰器，用于记录某个页面的请求信息
+    """
     @wraps(f)
     def wrapper(*args, **kwargs):
         now = datetime.datetime.now()
@@ -38,7 +41,7 @@ def log_access(f):
 @log_access
 def index():
     """
-    返回主页和自己的文章页
+    返回主页
     """
     page = request.args.get('page', 1, type=int)
     pagination = Article.query.filter(Article.status != -1).order_by(Article.create_time.desc()).paginate(page, per_page=10, error_out=False)
@@ -52,7 +55,7 @@ def index():
 @log_access
 def archives():
     """
-    返回主页和自己的文章页
+    自己的文章页
     """
 
     page = request.args.get('page', 1, type=int)
@@ -68,7 +71,8 @@ def archives():
 def pyhub():
     """
     返回Py资讯页面
-    提交博客地址，成功后需要有提交信息
+    提交博客地址，成功后需要有提交成功的提示信息
+    后台会将提交的数据源通过邮件发送至我的邮箱
     """
 
     page = request.args.get('page', 1, type=int)
@@ -78,13 +82,12 @@ def pyhub():
     now_page_data = [x.to_json() for x in posts]
 
     form = SourceForm()
-
     if form.validate_on_submit():
 
         mail = Mail()
         msg = Message(subject='新的博客源',
                       recipients=['qixiangyangrm@foxmail.com'])
-        # 邮件内容会以文本和html两种格式呈现，而你能看到哪种格式取决于你的邮件客户端。
+
         msg.html = '<b>{}<b>'.format(form.blog_source.data)
 
         try:
@@ -107,7 +110,8 @@ def about():
 @log_access
 def article(article_id):
     """
-    :param article_id:
+    进入特定文章页
+    :param article_id: 文章id
     :return: 返回单篇文章
     """
     page_data = Article.query.filter(and_(Article.id == article_id, Article.status != -1)).first()
@@ -121,7 +125,7 @@ def article(article_id):
 @login_required
 def contents():
     """
-    需要先行登陆
+    内容管理页，返回所有的博客内容
     :return: 返回内容列表页
     """
     page = request.args.get('page', 1, type=int)
@@ -136,7 +140,7 @@ def contents():
 @login_required
 def delete_article(article_id):
     """
-    删除选定的文章并重定向本页
+    删除选定的文章并重定向至本页
     """
     res = Article.query.filter_by(id=article_id).first()
     db.session.delete(res)
@@ -150,6 +154,8 @@ def delete_article(article_id):
 def edit(article_id):
     """
     新增或编辑文章内容
+    首先判断是否提交了表单，如果提交了表单，则进入表单提交的流程。
+    若未提交表单，则进入读取数据的流程。
     """
     form = PostForm()
     page_data = None
@@ -172,7 +178,7 @@ def edit(article_id):
             else:
                 page_data.status = 1
             db.session.commit()
-            flash('Edit Saved.', category='success')
+            flash('完成编辑.', category='success')
 
         else:
             now = datetime.datetime.now()
@@ -230,6 +236,9 @@ def edit(article_id):
 @blog.route('/upload/', methods=['POST'])
 @login_required
 def upload():
+    """
+    文章中需要插入图片时，使用本函数上传图片，并回传图片上传目录
+    """
     file = request.files.get('editormd-image-file')
     if not file:
         res = {
@@ -253,6 +262,9 @@ def upload():
 
 @blog.route('/image/<name>')
 def image(name):
+    """
+    返回文章中的图片
+    """
     parts = ['app', 'upload', 'pic', name]
     path = Path.cwd().joinpath(*parts)
     with open(str(path), 'rb') as f:
