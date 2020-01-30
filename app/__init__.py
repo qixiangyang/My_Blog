@@ -11,7 +11,6 @@ from flask_login import LoginManager
 from .filters import handle_time
 import logging
 from logging.handlers import TimedRotatingFileHandler
-
 from config import config
 
 db = SQLAlchemy()

@@ -14,7 +14,7 @@ class Article(db.Model):
     __tablename__ = 'article'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(64), unique=True)
-    text = db.Column(db.String(10000))
+    text = db.Column(db.Text())
     text_pre = db.Column(db.String(500))
     author = db.Column(db.String(20))
     category = db.relationship('ArticleCategory', backref=db.backref('category'))
@@ -59,8 +59,8 @@ class PyNews(db.Model):
     __tablename__ = 'pynews'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(200), unique=True)
-    text = db.Column(db.String())
-    preview = db.Column(db.String())
+    text = db.Column(db.Text())
+    preview = db.Column(db.Text())
     author = db.Column(db.String(50))
     category = db.Column(db.String(100))
     tags = db.Column(db.String(200))
@@ -102,8 +102,8 @@ class Click(db.Model):
     route = db.Column(db.String(20))
     time = db.Column(db.TIMESTAMP)
     ip_address = db.Column(db.String(20))
-    cookie = db.Column(db.String())
-    user_agent = db.Column(db.String())
+    cookie = db.Column(db.String(200))
+    user_agent = db.Column(db.String(200))
 
 
 class Role(db.Model):
