@@ -17,8 +17,8 @@ class Article(db.Model):
     text = db.Column(db.String(10000))
     text_pre = db.Column(db.String(500))
     author = db.Column(db.String(20))
-    category = db.Column(db.String(20))
-    tags = db.Column(db.String(50))
+    category = db.relationship('ArticleCategory', backref=db.backref('category'))
+    tags = db.relationship('ArticleTags', backref=db.backref('tags'))
     create_time = db.Column(db.TIMESTAMP)
     update_time = db.Column(db.TIMESTAMP)
     other_info = db.Column(db.String(100))
@@ -41,6 +41,18 @@ class Article(db.Model):
             'other_info': self.other_info,
         }
         return json_data
+
+
+class ArticleCategory(db.Model):
+    __tablename__ = 'category'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    category = author = db.Column(db.String(30))
+
+
+class ArticleTags(db.Model):
+    __tablename__ = 'tags'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    tags = author = db.Column(db.String(30))
 
 
 class PyNews(db.Model):
