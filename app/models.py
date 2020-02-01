@@ -17,8 +17,9 @@ class Article(db.Model):
     text = db.Column(db.Text())
     text_pre = db.Column(db.String(500))
     author = db.Column(db.String(20))
-    category = db.relationship('ArticleCategory', backref=db.backref('category'))
-    tags = db.relationship('ArticleTags', backref=db.backref('tags'))
+    category = db.relationship('ArticleCategory', backref=db.backref('article_cate'))
+    category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
+    tags_record = db.relationship('ArticleTagsRecord')
     create_time = db.Column(db.TIMESTAMP)
     update_time = db.Column(db.TIMESTAMP)
     other_info = db.Column(db.String(100))
@@ -34,8 +35,8 @@ class Article(db.Model):
             'text': self.text,
             'text_pre': self.text_pre,
             'author': self.author,
-            'category': self.category,
-            'tags': self.tags,
+            'category': self.category.category_name,
+            'tags': ' '.join(self.tags_record.tags_name),
             'create_time': self.create_time,
             'update_time': self.update_time,
             'other_info': self.other_info,
@@ -46,13 +47,21 @@ class Article(db.Model):
 class ArticleCategory(db.Model):
     __tablename__ = 'category'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    category = author = db.Column(db.String(30))
+    category_name = db.Column(db.String(30))
+
+
+class ArticleTagsRecord(db.Model):
+    __tablename__ = 'tags_record'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    tags_id = db.Column(db.Integer, db.ForeignKey('tags.id'))
+    tags_name = db.relationship('ArticleTags', backref=db.backref('article_tag'))
+    article_id = db.Column(db.Integer, db.ForeignKey('article.id'))
 
 
 class ArticleTags(db.Model):
     __tablename__ = 'tags'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    tags = author = db.Column(db.String(30))
+    tags_name = db.Column(db.String(30), nullable=False)
 
 
 class PyNews(db.Model):
