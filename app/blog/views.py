@@ -6,7 +6,7 @@ from functools import wraps
 from . import blog
 from .. import db
 from .forms import PostForm, SourceForm
-from ..models import Article, PyNews, Click
+from ..models import (Article, PyNews, Click, ArticleCategory, ArticleTags)
 import datetime
 from pathlib import Path
 import random
@@ -269,6 +269,16 @@ def image(name):
     with open(str(path), 'rb') as f:
         resp = Response(f.read(), mimetype="image/jpeg")
     return resp
+
+
+@blog.route('/test')
+def test():
+    return redirect(url_for("blog.test_re", _external=True))
+
+
+@blog.route('/test/redirect')
+def test_re():
+    return "are you ok"
 
 
 @blog.errorhandler(404)
