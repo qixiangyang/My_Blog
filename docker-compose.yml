@@ -1,0 +1,14 @@
+version: '3'
+services:
+  my_blog:
+    image: .
+    environment:
+      - FLASK_APP=acenter.py
+      - FLASK_ENV=testing
+    ports:
+      - "8080:5000"
+    volumes:
+      - ./log:/acenter/log
+
+    container_name: my_blog
+    restart: always
