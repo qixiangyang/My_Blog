@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
@@ -51,6 +51,8 @@ jobs:
         tags: ${{ matrix.image-name }}-${{ matrix.image-version }}:latest
         load: true
 
+    - name: Push
+      run: docker push ${{ secrets.TCLOUD_REGISTRY }}/private_use/blog
 
 #    - name: docker build and push TCCLOUD
 #      run: |
