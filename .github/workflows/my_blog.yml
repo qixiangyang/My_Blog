@@ -14,7 +14,7 @@ jobs:
     strategy:
       matrix:
         image-name: [my_blog]
-        image-version: [1.0]
+        image-version: [1.0.0]
 
     steps:
     - uses: actions/checkout@v2
@@ -43,7 +43,7 @@ jobs:
 
     - name: docker build and push TCCLOUD
       run: |
-        sudo docker login --username=${{ secrets.TCLOUD_PASSWORD }} ccr.ccs.tencentyun.com --password=${{ secrets.TCLOUD_USERNAME }}
+        sudo docker login ccr.ccs.tencentyun.com -u ${{ secrets.TCLOUD_PASSWORD }} -p ${{ secrets.TCLOUD_USERNAME }}
         sudo docker build -t ${{ matrix.image-name }}:${{ matrix.image-version }} .
         sudo docker tag ${{ matrix.image-name }}:${{ matrix.image-version }} cccr.ccs.tencentyun.com/private_use/blog:${{ matrix.image-version }}
         sudo docker push cccr.ccs.tencentyun.com/private_use/blog:${{ matrix.image-version }}
