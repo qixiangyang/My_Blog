@@ -46,18 +46,18 @@ editor.md
 ### 目前追踪的数据源
 截止到2019.12.6
 
-kawabangga: https://www.kawabangga.com/ # 本人授权
-laike9m: https://laike9m.com/blog/ # 本人授权
-ansheng: https://blog.ansheng.me/ # 开源协议
-the5fire: https://www.the5fire.com/ # 本人授权
-manjusaka: https://manjusaka.itscoder.com/ # 本人授权
-dongwm: https://www.dongwm.com/ # 开源协议
-piglei: https://www.zlovezl.cn/ # 开源协议
-prodesire: http://prodesire.cn/ # 本人授权
-greyli: http://greyli.com/ # 本人授权
-vimiix: https://www.vimiix.com/ # 本人授权
-kingname: https://www.kingname.info/ # 本人授权
-foofish: https://foofish.net/ # 本人授权
-frostming: https://frostming.com/ # 开源协议
+kawabangga: https://www.kawabangga.com/ # 本人授权  
+laike9m: https://laike9m.com/blog/ # 本人授权  
+ansheng: https://blog.ansheng.me/ # 开源协议  
+the5fire: https://www.the5fire.com/ # 本人授权  
+manjusaka: https://manjusaka.itscoder.com/ # 本人授权  
+dongwm: https://www.dongwm.com/ # 开源协议  
+piglei: https://www.zlovezl.cn/ # 开源协议  
+prodesire: http://prodesire.cn/ # 本人授权  
+greyli: http://greyli.com/ # 本人授权  
+vimiix: https://www.vimiix.com/ # 本人授权  
+kingname: https://www.kingname.info/ # 本人授权  
+foofish: https://foofish.net/ # 本人授权  
+frostming: https://frostming.com/ # 开源协议  
 
 以上内容使用均遵循相关开源协议，部分内容获得作者本人授权
