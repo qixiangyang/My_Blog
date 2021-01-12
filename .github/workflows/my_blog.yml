@@ -42,11 +42,11 @@ jobs:
 #        pytest
 
     - name: docker build and push TCCLOUD
-        env:
-          aliyun_username: ${{ secrets.TCCLOUD_USERNAME }}
-          aliyun_password: ${{ secrets.TCLOUD_PASSWORD }}
-        run: |
-          sudo docker login --username=${TCCLOUD_USERNAME} registry.cn-beijing.aliyuncs.com --password=${{ secrets.TCLOUD_PASSWORD }}
-          sudo docker build -t ${{ matrix.image-name }}:${{ matrix.image-version }} .
-          sudo docker tag ${{ matrix.image-name }}:${{ matrix.image-version }} registry.cn-beijing.aliyuncs.com/命名空间/镜像仓库:${{ matrix.image-version }}
-          sudo docker push cccr.ccs.tencentyun.com/private_use/blog:${{ matrix.image-version }}
+      env:
+        aliyun_username: ${{ secrets.TCCLOUD_USERNAME }}
+        aliyun_password: ${{ secrets.TCLOUD_PASSWORD }}
+      run: |
+        sudo docker login --username=${TCCLOUD_USERNAME} registry.cn-beijing.aliyuncs.com --password=${{ secrets.TCLOUD_PASSWORD }}
+        sudo docker build -t ${{ matrix.image-name }}:${{ matrix.image-version }} .
+        sudo docker tag ${{ matrix.image-name }}:${{ matrix.image-version }} cccr.ccs.tencentyun.com/private_use/blog:${{ matrix.image-version }}
+        sudo docker push cccr.ccs.tencentyun.com/private_use/blog:${{ matrix.image-version }}
