@@ -25,5 +25,5 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - /Users/qxy/PycharmProjects/My_Blog/postgres:/var/lib/postgresql/data/pgdata
+      - /data/pg_data:/var/lib/postgresql/data/pgdata
     restart: always
