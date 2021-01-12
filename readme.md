@@ -61,3 +61,5 @@ foofish: https://foofish.net/ # 本人授权
 frostming: https://frostming.com/ # 开源协议  
 
 以上内容使用均遵循相关开源协议，部分内容获得作者本人授权
+
+# test CI/CD
