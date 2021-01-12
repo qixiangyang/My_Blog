@@ -48,11 +48,11 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         context: .
-        tags: ${{ secrets.TCLOUD_REGISTRY }}/private_use/blog/:latest
+        tags: ${{ secrets.TCLOUD_REGISTRY }}/private_use/blog/${{ matrix.image-name }}-${{ matrix.image-version }}:latest
         load: true
 
     - name: Push
-      run: docker push ${{ secrets.TCLOUD_REGISTRY }}/private_use/blog:latest
+      run: docker push ${{ secrets.TCLOUD_REGISTRY }}/private_use/blog/${{ matrix.image-name }}-${{ matrix.image-version }}:latest
 
 #    - name: docker build and push TCCLOUD
 #      run: |
