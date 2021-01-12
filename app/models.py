@@ -114,7 +114,7 @@ class Click(db.Model):
     route = db.Column(db.String(20))
     time = db.Column(db.TIMESTAMP)
     ip_address = db.Column(db.String(20))
-    cookie = db.Column(db.String(200))
+    cookie = db.Column(db.Text)
     user_agent = db.Column(db.String(200))
 
 
