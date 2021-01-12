@@ -42,11 +42,8 @@ jobs:
 #        pytest
 
     - name: docker build and push TCCLOUD
-      env:
-        TCLOUD_USERNAME: ${{ secrets.TCLOUD_USERNAME }}
-        TCLOUD_PASSWORD: ${{ secrets.TCLOUD_PASSWORD }}
       run: |
-        sudo docker login --username=${{ TCLOUD_USERNAME }} ccr.ccs.tencentyun.com --password=${{ TCLOUD_PASSWORD }}
+        sudo docker login --username=${{ secrets.TCLOUD_PASSWORD }} ccr.ccs.tencentyun.com --password=${{ secrets.TCLOUD_USERNAME }}
         sudo docker build -t ${{ matrix.image-name }}:${{ matrix.image-version }} .
         sudo docker tag ${{ matrix.image-name }}:${{ matrix.image-version }} cccr.ccs.tencentyun.com/private_use/blog:${{ matrix.image-version }}
         sudo docker push cccr.ccs.tencentyun.com/private_use/blog:${{ matrix.image-version }}
