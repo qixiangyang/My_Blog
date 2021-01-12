@@ -38,8 +38,11 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
     - name: Login to Registry
-      run: |
-        docker login -u ${{ secrets.TCLOUD_USERNAME }} -p ${{ secrets.TCLOUD_PASSWORD }} ${{ secrets.TCLOUD_REGISTRY }}
+      uses: docker/login-action@v1
+      with:
+        registry: ${{ secrets.TCLOUD_REGISTRY }}
+        username: ${{ secrets.TCLOUD_USERNAME }}
+        password: ${{ secrets.TCLOUD_PASSWORD }}
 
     - name: Build and push
       id: docker_build
