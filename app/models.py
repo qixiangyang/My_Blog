@@ -14,11 +14,11 @@ class Article(db.Model):
     __tablename__ = 'article'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(64), unique=True)
-    text = db.Column(db.String(10000))
+    text = db.Column(db.Text())
     text_pre = db.Column(db.String(500))
     author = db.Column(db.String(20))
-    category = db.Column(db.String(20))
-    tags = db.Column(db.String(50))
+    category = db.relationship('ArticleCategory')
+    tags_record = db.relationship('ArticleTagsRecord')
     create_time = db.Column(db.TIMESTAMP)
     update_time = db.Column(db.TIMESTAMP)
     other_info = db.Column(db.String(100))
@@ -34,8 +34,8 @@ class Article(db.Model):
             'text': self.text,
             'text_pre': self.text_pre,
             'author': self.author,
-            'category': self.category,
-            'tags': self.tags,
+            'category': self.category.category_name,
+            'tags': ' '.join(self.tags_record.tags_name),
             'create_time': self.create_time,
             'update_time': self.update_time,
             'other_info': self.other_info,
@@ -43,12 +43,33 @@ class Article(db.Model):
         return json_data
 
 
+class ArticleCategory(db.Model):
+    __tablename__ = 'category'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    category_name = db.Column(db.String(30))
+    parent = db.relationship("Article", back_populates="child")
+
+
+class ArticleTagsRecord(db.Model):
+    __tablename__ = 'tags_record'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    article_id = db.Column(db.Integer, db.ForeignKey('article.id'))
+    tags_name = db.relationship('ArticleTags', backref=db.backref('tags'))
+    tags_id = db.Column(db.Integer, db.ForeignKey('tags.id'))
+
+
+class ArticleTags(db.Model):
+    __tablename__ = 'tags'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    tags_name = db.Column(db.String(30), nullable=False)
+
+
 class PyNews(db.Model):
     __tablename__ = 'pynews'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(200), unique=True)
-    text = db.Column(db.String())
-    preview = db.Column(db.String())
+    text = db.Column(db.Text())
+    preview = db.Column(db.Text())
     author = db.Column(db.String(50))
     category = db.Column(db.String(100))
     tags = db.Column(db.String(200))
@@ -90,8 +111,8 @@ class Click(db.Model):
     route = db.Column(db.String(20))
     time = db.Column(db.TIMESTAMP)
     ip_address = db.Column(db.String(20))
-    cookie = db.Column(db.String())
-    user_agent = db.Column(db.String())
+    cookie = db.Column(db.String(200))
+    user_agent = db.Column(db.String(200))
 
 
 class Role(db.Model):

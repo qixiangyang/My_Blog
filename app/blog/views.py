@@ -6,7 +6,7 @@ from functools import wraps
 from . import blog
 from .. import db
 from .forms import PostForm, SourceForm
-from ..models import Article, PyNews, Click
+from ..models import (Article, PyNews, Click, ArticleCategory, ArticleTags)
 import datetime
 from pathlib import Path
 import random
@@ -78,7 +78,6 @@ def pyhub():
     page = request.args.get('page', 1, type=int)
     pagination = PyNews.query.filter(PyNews.status != -1).order_by(PyNews.pub_time.desc()).limit(300).from_self().paginate(page, per_page=20, error_out=False)
     posts = pagination.items
-
     now_page_data = [x.to_json() for x in posts]
 
     form = SourceForm()
@@ -270,6 +269,16 @@ def image(name):
     with open(str(path), 'rb') as f:
         resp = Response(f.read(), mimetype="image/jpeg")
     return resp
+
+
+@blog.route('/test')
+def test():
+    return redirect(url_for("blog.test_re", _external=True))
+
+
+@blog.route('/test/redirect')
+def test_re():
+    return "are you ok"
 
 
 @blog.errorhandler(404)
