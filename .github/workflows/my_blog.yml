@@ -38,7 +38,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
     - name: Login to Registry
-      run: echo "${{ secrets.TCLOUD_PASSWORD }}" | docker login ccr.ccs.tencentyun.com -u "${{ secrets.TCLOUD_USERNAME }}" --password-stdin
+      run: docker login ccr.ccs.tencentyun.com -u "${{ secrets.TCLOUD_USERNAME }}" -p ${{ secrets.TCLOUD_PASSWORD }}
 
     - name: Build and push
       id: docker_build
