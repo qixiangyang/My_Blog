@@ -1,0 +1,29 @@
+version: '3'
+services:
+  web:
+    build: .
+    environment:
+      - FLASK_APP=my_blog.py
+      - FLASK_ENV=production
+    ports:
+      - "8080:5000"
+    volumes:
+      - ./log:/my_blog/log
+      - ./config.py:/my_blog/config.py
+
+    container_name: my_blog
+    restart: always
+
+  db_postgres:
+    image: postgres:latest
+    container_name: db_postgres
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PWD}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    volumes:
+      - /Users/qxy/PycharmProjects/My_Blog/postgres:/var/lib/postgresql/data/pgdata
+    restart: always

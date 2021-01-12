@@ -5,4 +5,4 @@ venv
 _config.yml
 config.py
 *.jpg
-.log
+./log
