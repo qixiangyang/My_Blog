@@ -5,12 +5,15 @@ name: My_blog_CI_CD
 
 on:
   push:
-    branches: [ dev ]
+    branches:
+      - dev
+    paths-ignore:
+      - start.sh
 
 jobs:
   build:
 
-    runs-on: CentOS-7.6
+    runs-on: centos-latest
 
     steps:
     - uses: actions/checkout@v2
