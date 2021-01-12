@@ -18,14 +18,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      run: |
-        echo "${{ secrets.TCLOUD_USERNAME }}"
-        echo "${{ secrets.TCLOUD_REGISTRY }}"
 
     - name: Set up Python 3.7
       uses: actions/setup-python@v2
       with:
         python-version: 3.7
+
+    - name: check_data
+      run: |
+        echo "${{ secrets.TCLOUD_USERNAME }}"
+        echo "${{ secrets.TCLOUD_REGISTRY }}"
 
     - name: Install dependencies
       run: |
