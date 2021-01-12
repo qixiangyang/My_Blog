@@ -40,7 +40,7 @@ jobs:
     - name: Login to Registry
       uses: docker/login-action@v1
       with:
-        registry: ${{ secrets.TCLOUD_REGISTRY }}
+        registry: ccr.ccs.tencentyun.com
         username: ${{ secrets.TCLOUD_USERNAME }}
         password: ${{ secrets.TCLOUD_PASSWORD }}
 
