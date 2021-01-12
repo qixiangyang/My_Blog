@@ -40,7 +40,7 @@ jobs:
     - name: Login to Registry
       uses: docker/login-action@v1
       with:
-        registry: ccr.ccs.tencentyun.com
+        registry: ${{ secrets.TCLOUD_REGISTRY }}
         username: ${{ secrets.TCLOUD_USERNAME }}
         password: ${{ secrets.TCLOUD_PASSWORD }}
 
@@ -48,11 +48,11 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         context: .
-        tags: ${{ matrix.image-name }}/${{ matrix.image-version }}:latest
+        tags: latest
         load: true
 
     - name: Push
-      run: docker push ${{ matrix.image-name }}/${{ matrix.image-version }}:latest
+      run: docker push ${{ secrets.TCLOUD_REGISTRY }}/private_use/blog:latest
 
 #    - name: docker build and push TCCLOUD
 #      run: |
