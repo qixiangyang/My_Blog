@@ -37,13 +37,17 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-    - name: Build and Push Docker Iamge
-      uses: docker/build-push-action@v2
+    - name: Login to Registry
+      uses: docker/login-action@v1
       with:
         registry: ${{ secrets.TCLOUD_REGISTRY }}
         username: ${{ secrets.TCLOUD_USERNAME }}
         password: ${{ secrets.TCLOUD_PASSWORD }}
-        repository: private_use/blog
+
+    - name: Build and push
+      id: docker_build
+      uses: docker/build-push-action@v2
+      with:
         push: true
         tags: ${{ matrix.image-name }}:${{ matrix.image-version }}
 
