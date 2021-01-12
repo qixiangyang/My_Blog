@@ -15,6 +15,7 @@ jobs:
       matrix:
         image-name: [my_blog]
         image-version: [1.0.0]
+        short-sha: $(git rev-parse --short=8 ${{ github.sha }})
 
     steps:
     - uses: actions/checkout@v2
@@ -48,7 +49,7 @@ jobs:
       id: docker_build
       uses: docker/build-push-action@v2
       with:
-        tags: ${{ matrix.image-name }}/${{ matrix.image-version }}:${{ GITHUB_SHA::8 }}
+        tags: ${{ matrix.image-name }}/${{ matrix.image-version }}:${{ matrix.short-sha }}
         file: ./Dockerfile
         push: true
 
