@@ -37,13 +37,23 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
+    - name: Build and Push Docker Iamge
+      uses: docker/build-push-action@v1
+      with:
+        registry: ${{ secrets.TCLOUD_REGISTRY }}
+        username: ${{ secrets.TCLOUD_USERNAME }}
+        password: ${{ secrets.TCLOUD_PASSWORD }}
+        repository: private_use/blog
+        tag_with_sha: true
+        path: 'docker'
+
+#    - name: docker build and push TCCLOUD
+#      run: |
+#        sudo docker login -u ${{ secrets.TCLOUD_USERNAME }} -p ${{ secrets.TCLOUD_PASSWORD }} ${{ secrets.TCLOUD_REGISTRY }}
+#        sudo docker build -t ${{ matrix.image-name }}:${{ matrix.image-version }} .
+#        sudo docker tag ${{ matrix.image-name }}:${{ matrix.image-version }} ${{ secrets.TCLOUD_REGISTRY }}/private_use/blog:${{ matrix.image-version }}
+#        sudo docker push ${{ secrets.TCLOUD_REGISTRY }}/private_use/blog:${{ matrix.image-version }}
+
 #    - name: Test with pytest
 #      run: |
 #        pytest
-
-    - name: docker build and push TCCLOUD
-      run: |
-        sudo docker login -u ${{ secrets.TCLOUD_USERNAME }} -p ${{ secrets.TCLOUD_PASSWORD }} ${{ secrets.TCLOUD_REGISTRY }}
-        sudo docker build -t ${{ matrix.image-name }}:${{ matrix.image-version }} .
-        sudo docker tag ${{ matrix.image-name }}:${{ matrix.image-version }} ${{ secrets.TCLOUD_REGISTRY }}/private_use/blog:${{ matrix.image-version }}
-        sudo docker push ${{ secrets.TCLOUD_REGISTRY }}/private_use/blog:${{ matrix.image-version }}
