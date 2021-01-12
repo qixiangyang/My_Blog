@@ -43,10 +43,10 @@ jobs:
 
     - name: docker build and push TCCLOUD
       env:
-        TCCLOUD_USERNAME: ${{ secrets.TCCLOUD_USERNAME }}
+        TCLOUD_USERNAME: ${{ secrets.TCLOUD_USERNAME }}
         TCLOUD_PASSWORD: ${{ secrets.TCLOUD_PASSWORD }}
       run: |
-        sudo docker login --username=${{ TCCLOUD_USERNAME }} ccr.ccs.tencentyun.com --password=${{ TCLOUD_PASSWORD }}
+        sudo docker login --username=${{ TCLOUD_USERNAME }} ccr.ccs.tencentyun.com --password=${{ TCLOUD_PASSWORD }}
         sudo docker build -t ${{ matrix.image-name }}:${{ matrix.image-version }} .
         sudo docker tag ${{ matrix.image-name }}:${{ matrix.image-version }} cccr.ccs.tencentyun.com/private_use/blog:${{ matrix.image-version }}
         sudo docker push cccr.ccs.tencentyun.com/private_use/blog:${{ matrix.image-version }}
