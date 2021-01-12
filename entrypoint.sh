@@ -1,3 +1,3 @@
 #!/bin/bash
 
-gunicorn acenter:app -c gunicorn_config.py
+gunicorn my_blog:app -c gunicorn_config.py

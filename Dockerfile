@@ -9,12 +9,12 @@ libssl-dev
 
 WORKDIR /my_blog
 
-COPY ./requirements.txt /acenter
+COPY ./requirements.txt /my_blog
 RUN pip install -r requirements.txt
 
 COPY . /my_blog
 
-ENV FLASK_APP blog_start.py
+ENV FLASK_APP my_blog.py
 ENV FLASK_ENV production
 
 ENTRYPOINT ["./entrypoint.sh"]
