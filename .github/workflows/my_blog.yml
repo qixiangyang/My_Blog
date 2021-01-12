@@ -52,7 +52,7 @@ jobs:
         load: true
 
     - name: Push
-      run: docker push ${{ secrets.TCLOUD_REGISTRY }}/private_use/blog/${{ matrix.image-name }}-${{ matrix.image-version }}:latest
+      run: docker push ${{ secrets.TCLOUD_REGISTRY }}/private_use/blog-${{ matrix.image-name }}-${{ matrix.image-version }}:latest
 
 #    - name: docker build and push TCCLOUD
 #      run: |
