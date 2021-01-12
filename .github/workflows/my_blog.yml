@@ -48,7 +48,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         context: .
-        tags: ${{ matrix.image-name }}-${{ matrix.image-version }}:latest ${{ secrets.TCLOUD_REGISTRY }}/private_use/blog:latest
+        tags: private_use/blog:latest ${{ secrets.TCLOUD_REGISTRY }}/private_use/blog:latest
         load: true
 
     - name: Push
