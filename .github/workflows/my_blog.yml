@@ -46,7 +46,7 @@ jobs:
         aliyun_username: ${{ secrets.TCCLOUD_USERNAME }}
         aliyun_password: ${{ secrets.TCLOUD_PASSWORD }}
       run: |
-        sudo docker login --username=${TCCLOUD_USERNAME} registry.cn-beijing.aliyuncs.com --password=${{ secrets.TCLOUD_PASSWORD }}
+        sudo docker login --username=${{ secrets.TCCLOUD_USERNAME }} ccr.ccs.tencentyun.com --password=${{ secrets.TCLOUD_PASSWORD }}
         sudo docker build -t ${{ matrix.image-name }}:${{ matrix.image-version }} .
         sudo docker tag ${{ matrix.image-name }}:${{ matrix.image-version }} cccr.ccs.tencentyun.com/private_use/blog:${{ matrix.image-version }}
         sudo docker push cccr.ccs.tencentyun.com/private_use/blog:${{ matrix.image-version }}
