@@ -18,6 +18,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      run |
+      echo "${{ secrets.TCLOUD_USERNAME }}"
+      echo "${{ secrets.TCLOUD_REGISTRY }}"
 
     - name: Set up Python 3.7
       uses: actions/setup-python@v2
@@ -40,9 +43,9 @@ jobs:
     - name: Login to Registry
       uses: docker/login-action@v1
       with:
+        registry: ccr.ccs.tencentyun.com/private_use/blog
         username: ${{ secrets.TCLOUD_USERNAME }}
         password: ${{ secrets.TCLOUD_PASSWORD }}
-        registry: ${{ secrets.TCLOUD_REGISTRY }}
 
     - name: Build and push
       id: docker_build
