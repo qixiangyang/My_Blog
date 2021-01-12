@@ -17,8 +17,7 @@ class Article(db.Model):
     text = db.Column(db.Text())
     text_pre = db.Column(db.String(500))
     author = db.Column(db.String(20))
-    category = db.relationship('ArticleCategory', backref=db.backref('article_cate'))
-    category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
+    category = db.relationship('ArticleCategory')
     tags_record = db.relationship('ArticleTagsRecord')
     create_time = db.Column(db.TIMESTAMP)
     update_time = db.Column(db.TIMESTAMP)
@@ -48,14 +47,15 @@ class ArticleCategory(db.Model):
     __tablename__ = 'category'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     category_name = db.Column(db.String(30))
+    parent = db.relationship("Article", back_populates="child")
 
 
 class ArticleTagsRecord(db.Model):
     __tablename__ = 'tags_record'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    tags_id = db.Column(db.Integer, db.ForeignKey('tags.id'))
-    tags_name = db.relationship('ArticleTags', backref=db.backref('article_tag'))
     article_id = db.Column(db.Integer, db.ForeignKey('article.id'))
+    tags_name = db.relationship('ArticleTags', backref=db.backref('tags'))
+    tags_id = db.Column(db.Integer, db.ForeignKey('tags.id'))
 
 
 class ArticleTags(db.Model):
