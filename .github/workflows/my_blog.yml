@@ -44,7 +44,8 @@ jobs:
         username: ${{ secrets.TCLOUD_USERNAME }}
         password: ${{ secrets.TCLOUD_PASSWORD }}
         repository: private_use/blog
-        tag_with_sha: true
+        push: true
+        tags: ${{ matrix.image-name }}:${{ matrix.image-version }}
 
 #    - name: docker build and push TCCLOUD
 #      run: |
