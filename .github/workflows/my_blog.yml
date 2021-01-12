@@ -39,10 +39,7 @@ jobs:
 
     - name: Login to Registry
       uses: docker/login-action@v1
-      with:
-        registry: ccr.ccs.tencentyun.com -u ${{ secrets.TCLOUD_USERNAME }} -p ${{ secrets.TCLOUD_PASSWORD }}
-        username: ${{ secrets.TCLOUD_USERNAME }}
-        password: ${{ secrets.TCLOUD_PASSWORD }}
+      run: echo "${{ secrets.TCLOUD_PASSWORD }}" | docker login ccr.ccs.tencentyun.com -u "${{ secrets.TCLOUD_USERNAME }}" --password-stdin
 
     - name: Build and push
       id: docker_build
