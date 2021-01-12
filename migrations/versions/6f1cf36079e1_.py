@@ -23,7 +23,7 @@ def upgrade():
     sa.Column('route', sa.String(length=20), nullable=True),
     sa.Column('time', sa.TIMESTAMP(), nullable=True),
     sa.Column('ip_address', sa.String(length=20), nullable=True),
-    sa.Column('cookie', sa.String(length=200), nullable=True),
+    sa.Column('cookie', sa.TEXT, nullable=True),
     sa.Column('user_agent', sa.String(length=200), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
