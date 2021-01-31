@@ -4,12 +4,13 @@ Author:qxy
 Date: 2019/9/18 3:00 下午
 File: __init__ 
 """
+import logging
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail
 from flask_login import LoginManager
 from .filters import handle_time
-import logging
 from logging.handlers import TimedRotatingFileHandler
 from config import config
 
