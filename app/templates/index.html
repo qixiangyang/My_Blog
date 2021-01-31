@@ -25,7 +25,8 @@
                 <p>
                     作者：{{ data.author }} &nbsp
                     | &nbsp 发布时间：&nbsp{{ data.create_time }} &nbsp
-                    | &nbsp 标签：&nbsp{{ data.category }}
+                    | &nbsp 分类：&nbsp{{ data.category }}
+                    | &nbsp 标签：{{ data.tags }}
                 </p>
 
                 <div id="{{"editormd-view" ~ data.id|string}}" class="content textwrapper">
