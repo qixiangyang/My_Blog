@@ -5,6 +5,7 @@ pipeline {
   		steps {
   			echo 'Hello world!'
   			echo "test jinkens"
+  			echo "test 2"
   		}
   	}
   }
