@@ -1,15 +1,17 @@
-from flask import render_template, request, flash, redirect, url_for, jsonify, Response, current_app
+import datetime
+import random
+
 from sqlalchemy import and_
 from flask_login import login_required
 from flask_mail import Message, Mail
 from functools import wraps
-from . import blog
-from .. import db
-from .forms import PostForm, SourceForm
-from ..models import (Article, PyNews, Click)
-import datetime
 from pathlib import Path
-import random
+from flask import (render_template, request, flash, redirect, url_for, jsonify, Response, current_app)
+
+from app import db
+from app.blog import blog
+from app.blog.forms import PostForm, SourceForm
+from app.models import (Article, ArticleStatus, PyNews, Click, Category)
 
 
 def log_access(f):
@@ -18,16 +20,12 @@ def log_access(f):
     """
     @wraps(f)
     def wrapper(*args, **kwargs):
-        now = datetime.datetime.now()
-        func_name = f.__name__
-        ip = request.remote_addr
-        cookie = str(request.cookies)
-        user_agent = str(request.user_agent)
-        access_data = Click(route=func_name,
-                            time=datetime.datetime(now.year, now.month, now.day, now.hour, now.minute, now.second),
-                            ip_address=ip,
-                            cookie=cookie,
-                            user_agent=user_agent)
+        access_data = Click(
+            route=f.__name__,
+            ip_address=request.remote_addr,
+            cookie=str(request.cookies),
+            user_agent=str(request.user_agent)
+        )
         try:
             db.session.add(access_data)
             db.session.commit()
@@ -44,11 +42,19 @@ def index():
     返回主页
     """
     page = request.args.get('page', 1, type=int)
-    pagination = Article.query.filter(Article.status != -1).order_by(Article.create_time.desc()).paginate(page, per_page=10, error_out=False)
-    posts = pagination.items
-    now_page_data = [x.to_json() for x in posts]
+    page_size = request.args.get('page_size', 10, type=int)
 
-    return render_template('index.html', page_data=now_page_data, pagination=pagination)
+    pagination = Article.query.filter(
+        Article.status == ArticleStatus.publish
+    ).order_by(
+        Article.create_time.desc()
+    ).paginate(
+        page, per_page=page_size, error_out=False
+    )
+
+    page_data = [x.to_json() for x in pagination.items]
+
+    return render_template('index.html', page_data=page_data, pagination=pagination)
 
 
 @blog.route('/archives', methods=['GET'])
@@ -59,11 +65,19 @@ def archives():
     """
 
     page = request.args.get('page', 1, type=int)
-    pagination = Article.query.filter(Article.status != -1).order_by(Article.create_time.desc()).paginate(page, per_page=10, error_out=False)
-    posts = pagination.items
-    now_page_data = [x.to_json() for x in posts]
+    page_size = request.args.get('page_size', 10, type=int)
 
-    return render_template('archives.html', page_data=now_page_data, pagination=pagination)
+    pagination = Article.query.filter(
+        Article.status == ArticleStatus.publish
+    ).order_by(
+        Article.create_time.desc()
+    ).paginate(
+        page, per_page=page_size, error_out=False
+    )
+
+    page_data = [x.to_json() for x in pagination.items]
+
+    return render_template('archives.html', page_data=page_data, pagination=pagination)
 
 
 @blog.route('/pyhub', methods=['GET', 'POST'])
@@ -76,9 +90,12 @@ def pyhub():
     """
 
     page = request.args.get('page', 1, type=int)
-    pagination = PyNews.query.filter(PyNews.status != -1).order_by(PyNews.pub_time.desc()).limit(300).from_self().paginate(page, per_page=20, error_out=False)
-    posts = pagination.items
-    now_page_data = [x.to_json() for x in posts]
+    pagination = PyNews.query.filter(
+        PyNews.status != -1
+    ).order_by(
+        PyNews.pub_time.desc()
+    ).limit(300).from_self().paginate(page, per_page=20, error_out=False)
+    now_page_data = [x.to_json() for x in pagination.items]
 
     form = SourceForm()
     if form.validate_on_submit():
@@ -110,14 +127,14 @@ def about():
 def article(article_id):
     """
     进入特定文章页
-    :param article_id: 文章id
-    :return: 返回单篇文章
     """
-    page_data = Article.query.filter(and_(Article.id == article_id, Article.status != -1)).first()
+    page_data = Article.query.filter(and_(
+        Article.id == article_id,
+        Article.status == ArticleStatus.publish
+    )).first()
     if page_data:
         return render_template('article_page.html', page_data=page_data)
-    else:
-        return render_template('404.html')
+    return render_template('404.html')
 
 
 @blog.route('/contents')
@@ -129,8 +146,7 @@ def contents():
     """
     page = request.args.get('page', 1, type=int)
     pagination = Article.query.order_by(Article.update_time.desc()).paginate(page, per_page=10, error_out=False)
-    posts = pagination.items
-    now_page_data = [x.to_json() for x in posts]
+    now_page_data = [x.to_json() for x in pagination.items]
 
     return render_template('editor/contents_list.html', page_data=now_page_data, pagination=pagination)
 
@@ -148,7 +164,7 @@ def delete_article(article_id):
     return redirect(url_for('blog.contents'))
 
 
-@blog.route('/edit/<article_id>', methods=['GET', 'POST'])
+@blog.route('/edit/<int:article_id>', methods=['GET', 'POST'])
 @login_required
 def edit(article_id):
     """
@@ -157,79 +173,51 @@ def edit(article_id):
     若未提交表单，则进入读取数据的流程。
     """
     form = PostForm()
-    page_data = None
 
-    if form.validate_on_submit():
-
-        if article_id != 'new':
-
-            now = datetime.datetime.now()
-
-            page_data = Article.query.filter_by(id=article_id).first()
-            page_data.title = form.title.data
-            page_data.text = form.text.data
-            page_data.text_pre = form.text_pre.data
-            page_data.update_time = datetime.datetime(now.year, now.month, now.day, now.hour, now.minute, now.second)
-            page_data.tags = form.tags.data
-            page_data.category = form.category.data
-            if form.save.data:
-                page_data.status = -1
-            else:
-                page_data.status = 1
-            db.session.commit()
-            flash('完成编辑.', category='success')
-
-        else:
-            now = datetime.datetime.now()
-
-            title = form.title.data
-            text = form.text.data
-            text_pre = form.text_pre.data
-            category = form.category.data
-            tags = form.tags.data
-            author = '加油马德里'
-            create_time = datetime.datetime(now.year, now.month, now.day, now.hour, now.minute, now.second)
-            if form.save.data:
-                status = -1
-            else:
-                status = 1
-
-            new_article = Article(title=title,
-                                  text=text,
-                                  text_pre=text_pre,
-                                  category=category,
-                                  tags=tags,
-                                  create_time=create_time,
-                                  author=author,
-                                  status=status)
-
+    if request.form:
+        title = form.title.data
+        text = form.text.data
+        text_pre = form.text_pre.data
+        category = form.category.raw_data
+        tags = form.tags.data
+        status = ArticleStatus.script if form.save_script.data else ArticleStatus.publish
+        # 新增文章
+        if article_id == 0:
+            new_article = Article(title=title, text=text, text_pre=text_pre, status=status, author="加油马德里")
             db.session.add(new_article)
             db.session.flush()
-            article_id = new_article.id
             db.session.commit()
-
+            new_article.creat_article_category(category_id_list=[int(x) for x in category])
+            new_article.creat_article_tag(tag_name_list=tags.split(";"))
+            article_id = new_article.id
             flash('文章新增成功.', category='success')
+
+        # 编辑文章
+        else:
+            article_res = Article.query.filter_by(id=article_id).first()
+            article_res.title = title
+            article_res.text = text
+            article_res.text_pre = text_pre
+            article_res.status = status
+            article_res.creat_article_category(category_id_list=[int(x) for x in category])
+            article_res.creat_article_tag(tag_name_list=tags.split(";"))
+            db.session.commit()
+            flash('保存成功.', category='success')
 
         return redirect(url_for('blog.edit', article_id=article_id))
 
-    if article_id != 'new':
+    article_res = Article.query.filter_by(id=article_id).first()
+    form.title.data = article_res.title if article_res else ""
+    form.text.data = article_res.text if article_res else ""
+    form.text_pre.data = article_res.text_pre if article_res else ""
+    form.tags.data = ";".join([x.json.get("tag_name") for x in article_res.tags]) if article_res else ""
+    category_choices = [(x.get("category_id"), x.get("category_name")) for x in Category.get_all_category()]
 
-        page_data = Article.query.filter_by(id=article_id).first()
+    if article_res:
+        pass
 
-        form.title.data = page_data.title
-        form.text.data = page_data.text
-        form.text_pre.data = page_data.text_pre
-        form.category.data = page_data.category
-        form.tags.data = page_data.tags
-
-        return render_template('editor/contents_edit.html', form=form, post=page_data)
-
-    else:
-        form.title.data = ''
-        form.text.data = ''
-        form.text_pre.data = ''
-
-        return render_template('editor/contents_edit.html', form=form, post=page_data)
+    form.category.choices = category_choices
+    return render_template('editor/contents_edit.html', form=form, post=article_res)
 
 
 @blog.route('/upload/', methods=['POST'])

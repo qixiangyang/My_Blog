@@ -12,67 +12,68 @@
             <br>
         </a>
 
-
         {% if post %}
             <form method="post" action="{{ url_for('blog.edit',article_id=post.id) }}">
         {% else %}
-            <form method="post" action="{{ url_for('blog.edit',article_id='new') }}">
+            <form method="post" action="{{ url_for('blog.edit',article_id=0) }}">
         {% endif %}
 
-            {{ form.hidden_tag() }}
+        {{ form.hidden_tag() }}
 
-            <div class="form-group">
-                {{ form.title.label }}
-                {% if form.title.errors %}
-                    {% for e in form.title.errors %}
-                        <p class="help-block">{{ e }}</p>
-                    {% endfor %}
-                {% endif %}
-                {{ form.title(class_='form-control') }}
-            </div>
+        <div class="form-group">
+            {{ form.title.label }}
+            {% if form.title.errors %}
+                {% for e in form.title.errors %}
+                    <p class="help-block">{{ e }}</p>
+                {% endfor %}
+            {% endif %}
+            {{ form.title(class_='form-control') }}
+        </div>
 
-            <div class="form-group">
-                {{ form.category.label }}
-                {{ form.category(class_='form-control') }}
-            </div>
+        <div class="form-group">
+            {{ form.category.label }}
+            {{ form.category(class_='form-control') }}
 
-            <div>
-                {{ form.tags.label }}
-                {{ form.tags(class_='form-control') }}
-            </div>
+        </div>
 
-            <div class="form-group">
-                <br>
-                {{ form.text.label }}
-                {% if form.text.errors %}
-                    {% for e in form.text.errors %}
-                        <p class="help-block">{{ e }}</p>
-                    {% endfor %}
-                {% endif %}
+        <div>
+            {{ form.tags.label }}
+            {{ form.tags(class_='form-control') }}
+        </div>
 
-                <div id="editormd" class="form-control">
-                    {{ form.text(style="display:none;") }}
-                </div>
-
-            </div>
-            <div>
-                {{ form.text_pre.label }}
-                {{ form.text_pre(class_='form-control') }}
-            </div>
+        <div class="form-group">
             <br>
-            <div>
-                {{ form.save.label }}
-                <br>
-                {{ form.save(class="btn btn-info left") }}
+            {{ form.text.label }}
+            {% if form.text.errors %}
+                {% for e in form.text.errors %}
+                    <p class="help-block">{{ e }}</p>
+                {% endfor %}
+            {% endif %}
+
+            <div id="editormd" class="form-control">
+                {{ form.text(style="display:none;") }}
             </div>
+
+        </div>
+        <div>
+            {{ form.text_pre.label }}
+            {{ form.text_pre(class_='form-control') }}
+        </div>
         <br>
+        <div>
+            {{ form.save_script.label }}
+            <br>
+            {{ form.save_script(class="btn btn-info left") }}
+        </div>
+        <br>
+
         {% if post %}
             <input class="btn btn-primary right" type="submit" value="修改">
         {% else %}
             <input class="btn btn-primary right" type="submit" value="新增">
         {% endif %}
 
-            <br>
+        <br>
 
         </form>
     </div>
