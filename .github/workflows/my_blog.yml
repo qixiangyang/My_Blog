@@ -9,7 +9,8 @@ on:
 
 jobs:
   build:
-    runs-on: self-hosted
+
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
@@ -53,6 +54,13 @@ jobs:
 
     - name: Push
       run: docker push ${{ secrets.TCLOUD_REGISTRY }}/private_use/blog:latest
+
+#    - name: docker build and push TCCLOUD
+#      run: |
+#        sudo docker login -u ${{ secrets.TCLOUD_USERNAME }} -p ${{ secrets.TCLOUD_PASSWORD }} ${{ secrets.TCLOUD_REGISTRY }}
+#        sudo docker build -t ${{ matrix.image-name }}:${{ matrix.image-version }} .
+#        sudo docker tag ${{ matrix.image-name }}:${{ matrix.image-version }} ${{ secrets.TCLOUD_REGISTRY }}/private_use/blog:${{ matrix.image-version }}
+#        sudo docker push ${{ secrets.TCLOUD_REGISTRY }}/private_use/blog:${{ matrix.image-version }}
 
 #    - name: Test with pytest
 #      run: |
