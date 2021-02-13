@@ -32,10 +32,10 @@ def login():
         if user and user.verify_password(form.password.data) is False:
             current_app.logger.info(f"password_error")
 
-        flash('email or email error.', category="danger")
+        flash('email or password error.', category="danger")
         return redirect(url_for('auth.login'))
 
-    if form.validate() is False:
+    if form.is_submitted() and form.validate() is False:
         flash('Input data format error', category="danger")
 
     return render_template('auth/login.html', form=form)
