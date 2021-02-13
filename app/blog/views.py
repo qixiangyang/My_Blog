@@ -11,7 +11,7 @@ from flask import (render_template, request, flash, redirect, url_for, jsonify, 
 from app import db
 from app.blog import blog
 from app.blog.forms import PostForm, SourceForm
-from app.models import (Article, ArticleStatus, PyNews, Click, Category)
+from app.models import (Article, ArticleStatus, PyNews, AccessLog, Category)
 
 
 def log_access(f):
@@ -20,12 +20,16 @@ def log_access(f):
     """
     @wraps(f)
     def wrapper(*args, **kwargs):
-        access_data = Click(
+        ip_address = request.headers.get("X-Real-Ip", None) or request.remote_addr
+        access_data = AccessLog(
             route=f.__name__,
-            ip_address=request.remote_addr,
+            ip_address=ip_address,
             cookie=str(request.cookies),
-            user_agent=str(request.user_agent)
+            user_agent=str(request.user_agent),
+            request_method=request.method.lower()
         )
+        current_app.logger.info(f"request_info => ip: {ip_address}, "
+                                f"url: {request.url}, method: {request.method.lower()}")
         try:
             db.session.add(access_data)
             db.session.commit()

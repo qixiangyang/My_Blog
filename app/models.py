@@ -205,7 +205,7 @@ class PyNews(db.Model):
         return json_data
 
 
-class Click(db.Model):
+class AccessLog(db.Model):
     __tablename__ = 'access_log'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     route = db.Column(db.String(200))
