@@ -9,6 +9,17 @@
         <meta name="author" content="加油马德里">
         <link rel="icon" href="{{ url_for('static', filename='images/logo.jpeg') }}">
         <title>加油马德里的主页</title>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{ message }}
+                </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+        {% block body %}{% endblock %}
 
         {% block css %}　<!--css模块区域-->
         <!-- Bootstrap core CSS -->
