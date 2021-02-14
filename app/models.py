@@ -46,6 +46,14 @@ class Article(db.Model):
     def __repr__(self):
         return 'f<title {self.title} author {self.author}>'
 
+    @property
+    def category(self):
+        return ";".join([x.json.get("category_name") for x in self.category_m])
+
+    @property
+    def tag(self):
+        return ";".join([x.json.get("tag_name") for x in self.tags])
+
     def to_json(self):
         json_data = {
             'id': self.id,
@@ -53,8 +61,8 @@ class Article(db.Model):
             'text': self.text,
             'text_pre': self.text_pre,
             'author': self.author,
-            'category': ";".join([x.json.get("category_name") for x in self.category_m]),
-            'tags': ";".join([x.json.get("tag_name") for x in self.tags]),
+            'category': self.category,
+            'tags': self.tag,
             'create_time': self.create_time,
             'update_time': self.update_time,
             'other_info': self.other_info,
