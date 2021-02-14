@@ -100,8 +100,8 @@ class Article(db.Model):
         for tag_name in now_tag_name_set - new_tag_name_set:
 
             ArticleTags.query.filter(and_(
-                ArticleCategory.article_id == self.id,
-                ArticleCategory.name == tag_name
+                ArticleTags.article_id == self.id,
+                ArticleTags.name == tag_name
             )).delete()
 
         db.session.commit()
