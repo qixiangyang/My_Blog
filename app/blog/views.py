@@ -28,7 +28,7 @@ def log_access(f):
             user_agent=str(request.user_agent),
             request_method=request.method.lower()
         )
-        current_app.logger.info(f"request_info => ip: {ip_address}, "
+        current_app.logger.info(f"request_info => ip: {ip_address}, cookie: {request.user_agent}"
                                 f"url: {request.url}, method: {request.method.lower()}")
         try:
             db.session.add(access_data)
@@ -126,7 +126,7 @@ def about():
     return render_template('about.html')
 
 
-@blog.route('/archives/<article_id>')
+@blog.route('/archives/<article_id>', methods=["GET"])
 @log_access
 def article(article_id):
     """
@@ -138,7 +138,21 @@ def article(article_id):
     )).first()
     if article_res:
         return render_template('article_page.html', data=article_res.json)
+
     return render_template('404.html')
+
+
+@blog.route('/archives/<article_id>/delete', methods=["GET"])
+@login_required
+def delete_article(article_id):
+    """
+    删除选定的文章并重定向至本页
+    """
+    res = Article.query.filter_by(id=article_id).first()
+    db.session.delete(res)
+    db.session.commit()
+
+    return redirect(url_for('blog.contents'))
 
 
 @blog.route('/contents')
@@ -153,19 +167,6 @@ def contents():
     now_page_data = [x.json for x in pagination.items]
 
     return render_template('editor/contents_list.html', page_data=now_page_data, pagination=pagination)
-
-
-@blog.route('/delete_article/<article_id>')
-@login_required
-def delete_article(article_id):
-    """
-    删除选定的文章并重定向至本页
-    """
-    res = Article.query.filter_by(id=article_id).first()
-    db.session.delete(res)
-    db.session.commit()
-
-    return redirect(url_for('blog.contents'))
 
 
 @blog.route('/edit/<int:article_id>', methods=['GET', 'POST'])
