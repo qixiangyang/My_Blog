@@ -54,7 +54,8 @@ class Article(db.Model):
     def tag(self):
         return ";".join([x.json.get("tag_name") for x in self.tags])
 
-    def to_json(self):
+    @property
+    def json(self):
         json_data = {
             'id': self.id,
             'title': self.title,

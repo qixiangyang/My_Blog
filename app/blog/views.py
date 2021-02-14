@@ -56,7 +56,7 @@ def index():
         page, per_page=page_size, error_out=False
     )
 
-    page_data = [x.to_json() for x in pagination.items]
+    page_data = [x.json for x in pagination.items]
 
     return render_template('index.html', page_data=page_data, pagination=pagination)
 
@@ -79,7 +79,7 @@ def archives():
         page, per_page=page_size, error_out=False
     )
 
-    page_data = [x.to_json() for x in pagination.items]
+    page_data = [x.json for x in pagination.items]
 
     return render_template('archives.html', page_data=page_data, pagination=pagination)
 
@@ -132,12 +132,12 @@ def article(article_id):
     """
     进入特定文章页
     """
-    page_data = Article.query.filter(and_(
+    article_res = Article.query.filter(and_(
         Article.id == article_id,
         Article.status == ArticleStatus.publish
     )).first()
-    if page_data:
-        return render_template('article_page.html', page_data=page_data)
+    if article_res:
+        return render_template('article_page.html', data=article_res.json)
     return render_template('404.html')
 
 
@@ -150,7 +150,7 @@ def contents():
     """
     page = request.args.get('page', 1, type=int)
     pagination = Article.query.order_by(Article.update_time.desc()).paginate(page, per_page=10, error_out=False)
-    now_page_data = [x.to_json() for x in pagination.items]
+    now_page_data = [x.json for x in pagination.items]
 
     return render_template('editor/contents_list.html', page_data=now_page_data, pagination=pagination)
 

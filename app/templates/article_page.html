@@ -17,15 +17,17 @@
     <div class="container col-xs-9" >
 
         <div class="info">
-            <h2 class="page-header" style="color: #1b6d85"> {{ page_data.title }} </h2>
+            <h2 class="page-header" style="color: #1b6d85"> {{ data.title }} </h2>
             <p class="text-left" style="color: #999999">
-                标签：{{ page_data.tag }} &nbsp | 分类：&nbsp{{ page_data.category}} &nbsp
-                | &nbsp 发布时间：&nbsp{{ page_data.create_time}}
+                    作者：{{ data.author }} &nbsp
+                    | &nbsp 发布时间：&nbsp{{ data.create_time }} &nbsp
+                    | &nbsp 分类：&nbsp{{ data.category }}
+                    | &nbsp 标签：{{ data.tags }}
             </p>
         </div>
 
         <div id="editormd-view" class="mdl-cell mdl-card mdl-cell--12-col mdl-shadow--2dp content textwrapper">
-            <textarea style="size: auto" name="editormd-markdown-doc"> {{ page_data.text|safe }} </textarea>
+            <textarea style="size: auto" name="editormd-markdown-doc"> {{ data.text|safe }} </textarea>
         </div>
 
     </div>
