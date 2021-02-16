@@ -191,7 +191,7 @@ def edit(article_id):
         # 新增文章
         if article_id == 0:
             new_article = Article(title=title, text=text, text_pre=text_pre,
-                                  status=status, author="加油马德里")
+                                  status=status, author="加油马德里", create_time=create_time)
             db.session.add(new_article)
             db.session.flush()
             db.session.commit()
