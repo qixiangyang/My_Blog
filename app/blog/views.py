@@ -148,8 +148,9 @@ def delete_article(article_id):
     """
     删除选定的文章并重定向至本页
     """
-    res = Article.query.filter_by(id=article_id).first()
-    db.session.delete(res)
+    article_res = Article.query.filter_by(id=article_id).first()
+    if article_res:
+        article_res.status = ArticleStatus.delete
     db.session.commit()
 
     return redirect(url_for('blog.contents'))
@@ -163,7 +164,11 @@ def contents():
     :return: 返回内容列表页
     """
     page = request.args.get('page', 1, type=int)
-    pagination = Article.query.order_by(Article.update_time.desc()).paginate(page, per_page=10, error_out=False)
+    pagination = Article.query.filter(
+        Article.status != ArticleStatus.delete
+    ).order_by(
+        Article.update_time.desc()
+    ).paginate(page, per_page=10, error_out=False)
     now_page_data = [x.json for x in pagination.items]
 
     return render_template('editor/contents_list.html', page_data=now_page_data, pagination=pagination)
