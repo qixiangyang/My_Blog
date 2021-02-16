@@ -3,6 +3,8 @@
 {% block container %}
 
     <link rel="stylesheet" href="{{ url_for('static',filename='editormd/css/editormd.css') }}"/>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.standalone.min.css" rel="stylesheet">
+
     <div class="row">
         <h1 class="text-center"> 博客内容编辑器 </h1>
 
@@ -31,12 +33,16 @@
         </div>
 
         <div class="form-group">
-            {{ form.category.label }}
-            {{ form.category(class_='form-control') }}
-
+            {{ form.create_time.label }}
+            {{ form.create_time(id='datepicker', type='date', class_='form-control') }}
         </div>
 
-        <div>
+        <div class="form-group">
+            {{ form.category.label }}
+            {{ form.category(class_='form-control') }}
+        </div>
+
+        <div class="form-group">
             {{ form.tags.label }}
             {{ form.tags(class_='form-control') }}
         </div>
@@ -83,7 +89,7 @@
         <script src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
         <script src="{{ url_for('static',filename='editormd/editormd.min.js') }}"></script>
         <script type="text/javascript">
-            var testEditor;
+            let testEditor;
 
             $(function () {
                 testEditor = editormd("editormd", {
@@ -105,6 +111,17 @@
                     imageFormats : [ "jpg", "jpeg", "gif", "png", "bmp", "webp" ],
                     imageUploadURL : "{{ url_for('.upload') }}",
                 });
+            });
+        </script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+        <script type="text/javascript">
+            $('#date').datepicker({
+                weekStart: 1,
+                autoclose: true,
+                daysOfWeekHighlighted: "0,6",
+                format: "yyyy-mm-dd",
+                language: "zh-CN"
             });
         </script>
     {% endblock %}

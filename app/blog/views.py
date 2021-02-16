@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, date
 import random
 
 from sqlalchemy import and_
@@ -179,6 +179,7 @@ def edit(article_id):
     """
     form = PostForm()
 
+    # 提交表单
     if request.form:
         title = form.title.data
         text = form.text.data
@@ -186,9 +187,11 @@ def edit(article_id):
         category = form.category.raw_data
         tags = form.tags.data
         status = ArticleStatus.script if form.save_script.data else ArticleStatus.publish
+        create_time = form.create_time.data
         # 新增文章
         if article_id == 0:
-            new_article = Article(title=title, text=text, text_pre=text_pre, status=status, author="加油马德里")
+            new_article = Article(title=title, text=text, text_pre=text_pre,
+                                  status=status, author="加油马德里")
             db.session.add(new_article)
             db.session.flush()
             db.session.commit()
@@ -204,6 +207,7 @@ def edit(article_id):
             article_res.text = text
             article_res.text_pre = text_pre
             article_res.status = status
+            article_res.create_time = create_time
             article_res.creat_article_category(category_id_list=[int(x) for x in category])
             article_res.creat_article_tag(tag_name_list=tags.split(";"))
             db.session.commit()
@@ -215,13 +219,10 @@ def edit(article_id):
     form.title.data = article_res.title if article_res else ""
     form.text.data = article_res.text if article_res else ""
     form.text_pre.data = article_res.text_pre if article_res else ""
-    form.tags.data = ";".join([x.json.get("tag_name") for x in article_res.tags]) if article_res else ""
-    category_choices = [(x.get("category_id"), x.get("category_name")) for x in Category.get_all_category()]
+    form.tags.data = article_res.text_pre if article_res else ""
+    form.create_time.data = article_res.create_time if article_res else datetime.now()
+    form.category.choices = [(x.get("category_id"), x.get("category_name")) for x in Category.get_all_category()]
 
-    if article_res:
-        pass
-
-    form.category.choices = category_choices
     return render_template('editor/contents_edit.html', form=form, post=article_res)
 
 
@@ -239,7 +240,7 @@ def upload():
         }
     else:
         ex = file.filename.split('.')[1]
-        filename = str(int(datetime.datetime.now().timestamp())) + str(random.randint(1, 1000)) + '.' + ex
+        filename = str(int(datetime.now().timestamp())) + str(random.randint(1, 1000)) + '.' + ex
         parts = ['app', 'upload', 'pic', filename]
         path = Path.cwd().joinpath(*parts)
         file.save(str(path))
